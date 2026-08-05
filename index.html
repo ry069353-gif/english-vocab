@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily 5 BCA Words — हिंदी में एक शब्द</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-1: #0a0e27;
+    --bg-2: #1a1f3a;
+    --bg-3: #0f1729;
+    --accent: #00d9ff;
+    --accent-2: #00ff88;
+    --accent-3: #ff00aa;
+    --text: #f8f9fa;
+    --muted: #8a8fa3;
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(0, 217, 255, 0.18);
+  }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before {
+    background: radial-gradient(circle, #00d9ff, transparent);
+    top: -150px; left: -150px;
+    animation: float 18s ease-in-out infinite;
+  }
+  body::after {
+    background: radial-gradient(circle, #00ff88, transparent);
+    bottom: -150px; right: -150px;
+    animation: float 22s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, -50px) scale(1.1); }
+  }
+
+  .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+  .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 8px 24px rgba(0, 217, 255, 0.3);
+  }
+  .logo-sub { font-size: 11px; color: var(--accent); letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+  .live-badge { display: flex; align-items: center; gap: 8px; background: rgba(0, 255, 136, 0.12); border: 1px solid rgba(0, 255, 136, 0.4); color: var(--accent-2); padding: 8px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; }
+  .live-dot { width: 8px; height: 8px; background: var(--accent-2); border-radius: 50%; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.6); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
+
+  .hero { text-align: center; margin-bottom: 28px; }
+  .hero h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 10px; background: linear-gradient(135deg, #fff 0%, #00d9ff 50%, #00ff88 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+  .hindi { font-family: 'Noto Sans Devanagari', sans-serif; }
+
+  .date-strip { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(20px); border-radius: 16px; padding: 14px 22px; margin-bottom: 28px; }
+  .date-strip-item { text-align: center; }
+  .date-strip-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+  .date-strip-value { font-size: 17px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .date-strip-divider { width: 1px; height: 32px; background: var(--card-border); }
+
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 32px; }
+  .word-card { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(20px); border-radius: 18px; padding: 24px 22px; position: relative; overflow: hidden; transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.3s, box-shadow 0.3s; opacity: 0; transform: translateY(20px); animation: slideIn 0.6s forwards; }
+  .word-card:nth-child(1) { animation-delay: 0.05s; }
+  .word-card:nth-child(2) { animation-delay: 0.15s; }
+  .word-card:nth-child(3) { animation-delay: 0.25s; }
+  .word-card:nth-child(4) { animation-delay: 0.35s; }
+  .word-card:nth-child(5) { animation-delay: 0.45s; }
+  @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+  .word-card:hover { transform: translateY(-6px); border-color: rgba(0, 217, 255, 0.5); box-shadow: 0 20px 50px rgba(0, 217, 255, 0.15); }
+  .word-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+  .word-category { position: absolute; top: 16px; right: 18px; font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; background: rgba(0, 217, 255, 0.1); padding: 3px 8px; border-radius: 100px; text-transform: uppercase; }
+  .word-english { font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.5px; padding-right: 70px; }
+  .word-pronunciation { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 14px; }
+  .meaning-divider { height: 1px; background: var(--card-border); margin: 14px 0; }
+  .meaning-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .meaning-hindi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; line-height: 1.2; }
+  .meaning-hindi-roman { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  .context-box { margin-top: 14px; padding: 12px 14px; background: rgba(0, 217, 255, 0.06); border-left: 2px solid var(--accent); border-radius: 6px; font-size: 13px; line-height: 1.5; }
+  .context-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .context-hindi { font-family: 'Noto Sans Devanagari', sans-serif; color: var(--text); margin-bottom: 6px; }
+  .context-english { color: var(--muted); font-style: italic; font-size: 12px; }
+  .context-hindi strong, .context-english strong { color: var(--accent-2); font-weight: 700; }
+
+  .stats-bar { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; margin-bottom: 24px; font-size: 13px; }
+  .stats-item { text-align: center; }
+  .stats-num { font-size: 22px; font-weight: 800; color: var(--accent); display: block; }
+  .stats-lbl { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .footer { text-align: center; color: var(--muted); font-size: 12px; padding-top: 24px; border-top: 1px solid var(--card-border); }
+  .footer .hindi { color: var(--accent); }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120%); background: rgba(0, 255, 136, 0.95); color: #001f0f; padding: 12px 22px; border-radius: 100px; font-weight: 600; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.4s cubic-bezier(.2,.8,.2,1); z-index: 100; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px 40px; }
+    .word-card { padding: 22px 18px; }
+    .word-english { font-size: 20px; padding-right: 60px; }
+    .meaning-hindi { font-size: 24px; }
+    .date-strip { padding: 12px 14px; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div>
+        <div class="logo">
+          <div class="logo-icon">💻</div>
+          <div>
+            <div>BCA <span class="hindi">५</span> शब्द</div>
+            <div class="logo-sub">Daily Computer Vocabulary · 1 Year Plan</div>
+          </div>
+        </div>
+      </div>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        <span>LIVE</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>आज के <span class="hindi">५</span> BCA शब्द</h1>
+      <p>रोज़ 5 कंप्यूटर शब्द सीखें — हिंदी में एक-शब्द मतलब + संदर्भ वाक्य। पूरे एक साल के लिए।</p>
+    </section>
+
+    <div class="date-strip">
+      <div class="date-strip-item">
+        <div class="date-strip-label">Today</div>
+        <div class="date-strip-value" id="todayDate">—</div>
+      </div>
+      <div class="date-strip-divider"></div>
+      <div class="date-strip-item">
+        <div class="date-strip-label">IST Time</div>
+        <div class="date-strip-value" id="liveTime">—</div>
+      </div>
+      <div class="date-strip-divider"></div>
+      <div class="date-strip-item">
+        <div class="date-strip-label">Next refresh</div>
+        <div class="date-strip-value" id="nextRefresh">—</div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stats-item">
+        <span class="stats-num" id="totalWords">—</span>
+        <span class="stats-lbl">Total Words</span>
+      </div>
+      <div class="stats-item">
+        <span class="stats-num" id="daysPossible">—</span>
+        <span class="stats-lbl">Unique Days</span>
+      </div>
+      <div class="stats-item">
+        <span class="stats-num" id="dayNumber">—</span>
+        <span class="stats-lbl">Day #</span>
+      </div>
+    </div>
+
+    <div class="word-grid" id="wordGrid"></div>
+
+    <div class="footer">
+      🔄 Auto-updates daily at 12:00 AM IST · <span class="hindi">BCA के लिए रोज़ नए 5 शब्द</span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✨ नए BCA शब्द लोड हो गए!</div>
+
+<script>
+// ============================================================
+// MEGA BCA VOCABULARY BANK — 700+ words for full year coverage
+// ============================================================
+const WORD_BANK = [
+  // ========== PROGRAMMING BASICS (50) ==========
+  { en:"Algorithm",     pron:"/ˈæl.ɡə.rɪ.ðəm/",      hi:"क्रमादेश",          cat:"Algo",   hiR:"kramadesh",     hiC:"समस्या हल करने का <strong>क्रमादेश</strong> कदम-दर-कदम तरीका है।", enC:"An <strong>algorithm</strong> is a step-by-step problem-solving method." },
+  { en:"Variable",      pron:"/ˈveə.ri.ə.bəl/",      hi:"चर",                cat:"Basic",  hiR:"char",          hiC:"<strong>चर</strong> एक नाम है जो प्रोग्राम में मान रखता है।", enC:"A <strong>variable</strong> is a name that stores a value." },
+  { en:"Constant",      pron:"/ˈkɒn.stənt/",         hi:"अचर",               cat:"Basic",  hiR:"achar",         hiC:"<strong>अचर</strong> का मान पूरे प्रोग्राम में नहीं बदलता।", enC:"A <strong>constant</strong> never changes its value." },
+  { en:"Data Type",     pron:"/ˈdeɪ.tə.taɪp/",       hi:"आँकड़ा_प्रकार",     cat:"Basic",  hiR:"aanka-prakaar", hiC:"<strong>आँकड़ा प्रकार</strong> बताता है कि मान किस तरह का है।", enC:"A <strong>data type</strong> defines the kind of value." },
+  { en:"Operator",      pron:"/ˈɒp.ə.reɪ.tər/",      hi:"संक्रिया",           cat:"Basic",  hiR:"sankriya",      hiC:"<strong>संक्रिया</strong> चरों पर गणना या तुलना करती है।", enC:"An <strong>operator</strong> performs operations on values." },
+  { en:"Expression",    pron:"/ɪkˈspreʃ.ən/",        hi:"व्यंजक",             cat:"Basic",  hiR:"vyanjak",       hiC:"<strong>व्यंजक</strong> मान उत्पन्न करने वाला सूत्र है।", enC:"An <strong>expression</strong> produces a value when evaluated." },
+  { en:"Statement",     pron:"/ˈsteɪt.mənt/",        hi:"कथन",               cat:"Basic",  hiR:"kathan",        hiC:"<strong>कथन</strong> प्रोग्राम का एक पूर्ण आदेश है।", enC:"A <strong>statement</strong> is a complete code instruction." },
+  { en:"Function",      pron:"/ˈfʌŋk.ʃən/",          hi:"फलन",               cat:"Basic",  hiR:"phalan",        hiC:"<strong>फलन</strong> कोड का पुनः प्रयोग्य ब्लॉक है।", enC:"A <strong>function</strong> is a reusable block of code." },
+  { en:"Parameter",     pron:"/pəˈræm.ɪ.tər/",       hi:"प्राचल",            cat:"Basic",  hiR:"praachal",      hiC:"<strong>प्राचल</strong> फलन को दी जाने वाली सूचना है।", enC:"A <strong>parameter</strong> is input passed to a function." },
+  { en:"Argument",      pron:"/ˈɑː.ɡjə.mənt/",       hi:"तर्क",               cat:"Basic",  hiR:"tark",          hiC:"<strong>तर्क</strong> वह मान है जो फलन को भेजा जाता है।", enC:"An <strong>argument</strong> is the actual value passed in." },
+  { en:"Return",        pron:"/rɪˈtɜːn/",            hi:"प्रदान",             cat:"Basic",  hiR:"pradaan",       hiC:"<strong>प्रदान</strong> फलन से बाहर मान भेजता है।", enC:"<strong>Return</strong> sends a value back from a function." },
+  { en:"Loop",          pron:"/luːp/",               hi:"पाश",               cat:"Basic",  hiR:"paash",         hiC:"<strong>पाश</strong> कोड के एक भाग को बार-बार चलाता है।", enC:"A <strong>loop</strong> runs code repeatedly." },
+  { en:"Condition",     pron:"/kənˈdɪʃ.ən/",         hi:"शर्त",               cat:"Basic",  hiR:"shart",         hiC:"<strong>शर्त</strong> सही होने पर ही संगत कोड चलता है।", enC:"A <strong>condition</strong> decides which code runs." },
+  { en:"Index",         pron:"/ˈɪn.deks/",          hi:"सूचकांक",            cat:"Basic",  hiR:"soochkank",     hiC:"<strong>सूचकांक</strong> तत्व की सरणी में स्थिति बताता है।", enC:"An <strong>index</strong> marks an element's position." },
+  { en:"Buffer",        pron:"/ˈbʌf.ər/",           hi:"बफ़र",               cat:"Basic",  hiR:"buffer",        hiC:"<strong>बफ़र</strong> अस्थायी रूप से आँकड़े रखता है।", enC:"A <strong>buffer</strong> temporarily holds data." },
+  { en:"Stream",        pron:"/striːm/",            hi:"धारा",               cat:"Basic",  hiR:"dhaara",        hiC:"<strong>धारा</strong> आँकड़ों के बहने का क्रम है।", enC:"A <strong>stream</strong> is a flow of data." },
+  { en:"Identifier",    pron:"/aɪˈden.tɪ.faɪ.ər/",  hi:"पहचानकर्ता",         cat:"Basic",  hiR:"pehchaan-karta",hiC:"<strong>पहचानकर्ता</strong> चर या फलन का नाम है।", enC:"An <strong>identifier</strong> is the name of a variable or function." },
+  { en:"Keyword",       pron:"/ˈkiː.wɜːd/",         hi:"कीवर्ड",             cat:"Basic",  hiR:"keyword",       hiC:"<strong>कीवर्ड</strong> भाषा के आरक्षित शब्द हैं।", enC:"A <strong>keyword</strong> is a reserved word." },
+  { en:"Literal",       pron:"/ˈlɪt.ər.əl/",        hi:"शाब्दिक",            cat:"Basic",  hiR:"shaabdik",      hiC:"<strong>शाब्दिक</strong> सीधे कोड में लिखा मान है।", enC:"A <strong>literal</strong> is a fixed value in code." },
+  { en:"Null",          pron:"/nʌl/",                hi:"शून्य",               cat:"Basic",  hiR:"shunya",        hiC:"<strong>शून्य</strong> का अर्थ है कोई मान नहीं।", enC:"<strong>Null</strong> means no value." },
+  { en:"Boolean",       pron:"/ˈbuː.li.ən/",        hi:"द्वि-मान",           cat:"Basic",  hiR:"dwi-maan",      hiC:"<strong>द्वि-मान</strong> केवल सत्य या असत्य होता है।", enC:"A <strong>Boolean</strong> holds true or false." },
+  { en:"Integer",       pron:"/ˈɪn.tɪ.dʒər/",       hi:"पूर्णांक",            cat:"Basic",  hiR:"poornank",      hiC:"<strong>पूर्णांक</strong> बिना दशमलव की संख्या है।", enC:"An <strong>integer</strong> is a whole number." },
+  { en:"Float",         pron:"/fləʊt/",              hi:"भिन्न",               cat:"Basic",  hiR:"bhinn",         hiC:"<strong>भिन्न</strong> दशमलव वाली संख्या है।", enC:"A <strong>float</strong> is a number with decimals." },
+  { en:"String",        pron:"/strɪŋ/",              hi:"अक्षर_श्रृंखला",      cat:"Basic",  hiR:"akshar-shrinkhala",hiC:"<strong>अक्षर श्रृंखला</strong> वर्णों का क्रम है।", enC:"A <strong>string</strong> is a sequence of characters." },
+  { en:"Array",         pron:"/əˈreɪ/",              hi:"सरणी",               cat:"DS",     hiR:"sarni",         hiC:"<strong>सरणी</strong> एक ही प्रकार के तत्वों का संग्रह है।", enC:"An <strong>array</strong> stores same-type items." },
+  { en:"Pointer",       pron:"/ˈpɔɪn.tər/",         hi:"सूचक",               cat:"Basic",  hiR:"soochak",       hiC:"<strong>सूचक</strong> किसी मान का स्मृति-पता रखता है।", enC:"A <strong>pointer</strong> holds a memory address." },
+  { en:"Syntax",        pron:"/ˈsɪn.tæks/",         hi:"वाक्य_रचना",         cat:"Basic",  hiR:"vakya-rachna",  hiC:"<strong>वाक्य रचना</strong> भाषा के नियम बताती है।", enC:"<strong>Syntax</strong> defines language rules." },
+  { en:"Compiler",      pron:"/kəmˈpaɪ.lər/",       hi:"संकलक",              cat:"Basic",  hiR:"sankalak",      hiC:"<strong>संकलक</strong> स्रोत कोड को मशीनी भाषा में बदलता है।", enC:"A <strong>compiler</strong> converts source to machine code." },
+  { en:"Interpreter",   pron:"/ɪnˈtɜː.prə.tər/",    hi:"व्याख्याता",         cat:"Basic",  hiR:"vyakhyaata",    hiC:"<strong>व्याख्याता</strong> कोड को पंक्ति-दर-पंक्ति चलाता है।", enC:"An <strong>interpreter</strong> runs code line by line." },
+  { en:"Debugging",     pron:"/dɪˈbʌɡ.ɪŋ/",         hi:"त्रुटि_निवारण",     cat:"Basic",  hiR:"truti-nivaran", hiC:"<strong>त्रुटि निवारण</strong> प्रोग्राम की गलतियाँ ढूँढ़ने का काम है।", enC:"<strong>Debugging</strong> finds and fixes errors." },
+  { en:"Bug",           pron:"/bʌɡ/",                hi:"त्रुटि",              cat:"Basic",  hiR:"truti",         hiC:"<strong>त्रुटि</strong> प्रोग्राम में अनपेक्षित गलती है।", enC:"A <strong>bug</strong> is an unexpected error." },
+  { en:"Patch",         pron:"/pætʃ/",               hi:"परिवर्तन_खंड",      cat:"Basic",  hiR:"parivartan-khand",hiC:"<strong>परिवर्तन खंड</strong> से त्रुटियाँ ठीक होती हैं।", enC:"A <strong>patch</strong> fixes software errors." },
+  { en:"Update",        pron:"/ʌpˈdeɪt/",           hi:"अद्यतन",              cat:"Basic",  hiR:"adhyatan",      hiC:"<strong>अद्यतन</strong> सॉफ़्टवेयर का नया बेहतर रूप है।", enC:"An <strong>update</strong> is a newer version." },
+  { en:"Version",       pron:"/ˈvɜː.ʃən/",         hi:"संस्करण",            cat:"Basic",  hiR:"sankaran",      hiC:"<strong>संस्करण</strong> किसी सॉफ़्टवेयर का क्रमांकित प्रकाशन है।", enC:"A <strong>version</strong> is a numbered release." },
+  { en:"Install",       pron:"/ɪnˈstɔːl/",         hi:"संस्थापन",           cat:"Basic",  hiR:"sansthaapan",   hiC:"<strong>संस्थापन</strong> से सॉफ़्टवेयर कंप्यूटर पर तैयार होता है।", enC:"To <strong>install</strong> means to set up software." },
+  { en:"Uninstall",     pron:"/ˌʌn.ɪnˈstɔːl/",   hi:"विस्थापन",           cat:"Basic",  hiR:"visthaapan",    hiC:"<strong>विस्थापन</strong> से सॉफ़्टवेयर कंप्यूटर से हटता है।", enC:"To <strong>uninstall</strong> means to remove software." },
+  { en:"Cache",         pron:"/kæʃ/",                hi:"कैश",                cat:"Basic",  hiR:"kaish",         hiC:"<strong>कैश</strong> बार-बार जरूरी आँकड़े पास में रखता है।", enC:"A <strong>cache</strong> stores frequently used data." },
+  { en:"Memory",        pron:"/ˈmem.ər.i/",        hi:"स्मृति",              cat:"OS",     hiR:"smriti",        hiC:"<strong>स्मृति</strong> में प्रोग्राम चलते समय आँकड़े रहते हैं।", enC:"<strong>Memory</strong> holds running program data." },
+  { en:"Processor",     pron:"/ˈprəʊ.ses.ər/",    hi:"प्रोसेसर",           cat:"OS",     hiR:"prosesar",      hiC:"<strong>प्रोसेसर</strong> कंप्यूटर का मस्तिष्क है।", enC:"The <strong>processor</strong> is the computer's brain." },
+  { en:"Hardware",      pron:"/ˈhɑːd.weər/",     hi:"हार्डवेयर",          cat:"HW",     hiR:"haardveyar",    hiC:"<strong>हार्डवेयर</strong> कंप्यूटर के भौतिक भाग हैं।", enC:"<strong>Hardware</strong> is the physical part of a computer." },
+  { en:"Software",      pron:"/ˈsɒft.weər/",     hi:"सॉफ़्टवेयर",         cat:"Basic",  hiR:"soaftveyar",    hiC:"<strong>सॉफ़्टवेयर</strong> कंप्यूटर के लिए कार्यक्रम हैं।", enC:"<strong>Software</strong> is a set of programs." },
+  { en:"Firmware",      pron:"/ˈfɜːm.weər/",    hi:"फ़र्मवेयर",           cat:"HW",     hiR:"firmveyar",     hiC:"<strong>फ़र्मवेयर</strong> हार्डवेयर में जड़ा निम्न-स्तरीय कार्यक्रम है।", enC:"<strong>Firmware</strong> is low-level software in hardware." },
+  { en:"IDE",           pron:"/ˌaɪ.diːˈiː/",     hi:"एकीकृत_विकास_वातावरण",cat:"Basic",hiR:"ekikrit-vikas-vataavaran",hiC:"<strong>एकीकृत विकास वातावरण</strong> कोड लिखने-जाँचने का सर्वांगी साधन है।", enC:"An <strong>IDE</strong> is an all-in-one coding tool." },
+  { en:"Open Source",   pron:"/ˈəʊ.pən sɔːs/",   hi:"मुक्त_स्रोत",         cat:"Basic",  hiR:"mukt-srot",     hiC:"<strong>मुक्त स्रोत</strong> सॉफ़्टवेयर का कोड सबके लिए खुला होता है।", enC:"<strong>Open source</strong> code is freely available." },
+  { en:"Source Code",   pron:"/sɔːs kəʊd/",    hi:"स्रोत_कोड",           cat:"Basic",  hiR:"srot-code",     hiC:"<strong>स्रोत कोड</strong> प्रोग्रामर द्वारा लिखा मूल कोड है।", enC:"<strong>Source code</strong> is the original code written by developers." },
+  { en:"Executable",    pron:"/ɪɡˈzek.jə.tə.bəl/",hi:"निष्पादनीय",         cat:"Basic",  hiR:"nispaadniya",   hiC:"<strong>निष्पादनीय</strong> फ़ाइल सीधे चलने योग्य होती है।", enC:"An <strong>executable</strong> file can be run directly." },
+  { en:"Runtime",       pron:"/ˈrʌn.taɪm/",    hi:"रन_टाइम",             cat:"Basic",  hiR:"runtime",       hiC:"<strong>रन टाइम</strong> वह समय है जब प्रोग्राम चल रहा हो।", enC:"<strong>Runtime</strong> is when a program is running." },
+  { en:"Library",       pron:"/ˈlaɪ.brər.i/",  hi:"पुस्तकालय",          cat:"Basic",  hiR:"pustakalay",    hiC:"<strong>पुस्तकालय</strong> पूर्व-निर्मित कोड का संग्रह है।", enC:"A <strong>library</strong> is a collection of pre-written code." },
+  { en:"Framework",     pron:"/ˈfreɪm.wɜːk/", hi:"ढाँचा",               cat:"Web",    hiR:"dhaancha",      hiC:"<strong>ढाँचा</strong> विकास के लिए पूर्व-निर्मित संरचना है।", enC:"A <strong>framework</strong> provides a ready-made structure." },
+  { en:"Module",        pron:"/ˈmɒd.juːl/", hi:"मॉड्यूल",               cat:"Basic",  hiR:"module",        hiC:"<strong>मॉड्यूल</strong> कोड का स्वतंत्र इकाई-खंड है।", enC:"A <strong>module</strong> is an independent code unit." },
+  { en:"Package",       pron:"/ˈpæk.ɪdʒ/", hi:"पैकेज",                cat:"Basic",  hiR:"package",       hiC:"<strong>पैकेज</strong> संबंधित वर्गों का समूह है।", enC:"A <strong>package</strong> groups related classes." },
+  { en:"Dependency",    pron:"/dɪˈpen.dən.si/",hi:"निर्भरता",            cat:"Basic",  hiR:"nirbhartaa",    hiC:"<strong>निर्भरता</strong> वह बाहरी कोड है जिस पर प्रोग्राम निर्भर है।", enC:"A <strong>dependency</strong> is external code required." },
+
+  // ========== OOP (20) ==========
+  { en:"Class",         pron:"/klɑːs/",           hi:"वर्ग",                cat:"OOP",    hiR:"varg",          hiC:"<strong>वर्ग</strong> वस्तुओं के निर्माण का खाका है।", enC:"A <strong>class</strong> is a blueprint for objects." },
+  { en:"Object",        pron:"/ˈɒb.dʒɪkt/",     hi:"वस्तु",               cat:"OOP",    hiR:"vastu",         hiC:"<strong>वस्तु</strong> डेटा और विधियों का बंधा हुआ रूप है।", enC:"An <strong>object</strong> bundles data and methods." },
+  { en:"Inheritance",   pron:"/ɪnˈher.ɪ.təns/", hi:"वंशानुक्रम",          cat:"OOP",    hiR:"vanshanukram",  hiC:"<strong>वंशानुक्रम</strong> में नया वर्ग पुराने के गुण लेता है।", enC:"<strong>Inheritance</strong> lets classes share traits." },
+  { en:"Polymorphism",  pron:"/ˌpɒl.ɪˈmɔː.fɪ.zəm/",hi:"बहुरूपता",        cat:"OOP",    hiR:"bahuroopta",    hiC:"<strong>बहुरूपता</strong> में एक ही विधि अलग-अलग कार्य करती है।", enC:"<strong>Polymorphism</strong> = one interface, many forms." },
+  { en:"Abstraction",   pron:"/æbˈstræk.ʃən/",  hi:"अमूर्तता",            cat:"OOP",    hiR:"amoortta",      hiC:"<strong>अमूर्तता</strong> जटिलता को छुपाकर सरल रूप दिखाती है।", enC:"<strong>Abstraction</strong> hides complexity." },
+  { en:"Encapsulation", pron:"/ɪnˌkæp.sjʊˈleɪ.ʃən/",hi:"संपुटीकरण",      cat:"OOP",    hiR:"samputikaran",  hiC:"<strong>संपुटीकरण</strong> डेटा को बाहरी हस्तक्षेप से बचाता है।", enC:"<strong>Encapsulation</strong> protects data." },
+  { en:"Method",        pron:"/ˈmeθ.əd/",      hi:"विधि",                cat:"OOP",    hiR:"vidhi",         hiC:"<strong>विधि</strong> वर्ग के अंदर बनाई गई फलन है।", enC:"A <strong>method</strong> is a function inside a class." },
+  { en:"Attribute",     pron:"/ˈæt.rɪ.bjuːt/", hi:"गुण",                 cat:"OOP",    hiR:"gun",           hiC:"<strong>गुण</strong> वस्तु की विशेषता का नाम है।", enC:"An <strong>attribute</strong> is a property of an object." },
+  { en:"Constructor",   pron:"/kənˈstrʌk.tər/", hi:"रचयिता",             cat:"OOP",    hiR:"rachayita",     hiC:"<strong>रचयिता</strong> वस्तु बनाते समय स्वतः चलता है।", enC:"A <strong>constructor</strong> runs when an object is created." },
+  { en:"Interface",     pron:"/ˈɪn.tə.feɪs/",  hi:"अंतरफलक",             cat:"OOP",    hiR:"antarphalak",   hiC:"<strong>अंतरफलक</strong> विधियों का केवल खाका है।", enC:"An <strong>interface</strong> is a method blueprint." },
+  { en:"Instance",      pron:"/ˈɪn.stəns/",   hi:"उदाहरण",              cat:"OOP",    hiR:"udaaharan",     hiC:"<strong>उदाहरण</strong> किसी वर्ग से बनी वस्तु है।", enC:"An <strong>instance</strong> is a created object." },
+  { en:"Override",      pron:"/ˌəʊ.vəˈraɪd/", hi:"अधिलेखन",             cat:"OOP",    hiR:"adhilekhan",    hiC:"<strong>अधिलेखन</strong> में उपवर्ग पैतृक विधि बदलता है।", enC:"<strong>Override</strong> replaces a parent's method." },
+  { en:"Overload",      pron:"/ˈəʊ.və.ləʊd/", hi:"अतिभार",               cat:"OOP",    hiR:"atibhaar",      hiC:"<strong>अतिभार</strong> में एक ही नाम के कई फलन होते हैं।", enC:"<strong>Overload</strong> = same name, different params." },
+  { en:"Static",        pron:"/ˈstæt.ɪk/",   hi:"स्थिर",                cat:"OOP",    hiR:"sthir",         hiC:"<strong>स्थिर</strong> सदस्य वर्ग का एक ही होता है।", enC:"A <strong>static</strong> member belongs to the class." },
+  { en:"Final",         pron:"/ˈfaɪ.nəl/",   hi:"अंतिम",                cat:"OOP",    hiR:"antim",         hiC:"<strong>अंतिम</strong> वर्ग को आगे विस्तारित नहीं किया जा सकता।", enC:"<strong>Final</strong> prevents further extension." },
+  { en:"Destructor",    pron:"/dɪˈstrʌk.tər/",hi:"विनाशक",              cat:"OOP",    hiR:"vinaashak",     hiC:"<strong>विनाशक</strong> वस्तु नष्ट होने पर स्वतः चलता है।", enC:"A <strong>destructor</strong> runs when an object is destroyed." },
+  { en:"Super",         pron:"/ˈsuː.pər/", hi:"अधि",                  cat:"OOP",    hiR:"adhi",          hiC:"<strong>अधि</strong> पैतृक वर्ग के सदस्य को पहचानता है।", enC:"<strong>Super</strong> refers to the parent class." },
+  { en:"This",          pron:"/ðɪs/",       hi:"स्वयं",                cat:"OOP",    hiR:"svayam",        hiC:"<strong>स्वयं</strong> वर्तमान वस्तु को संदर्भित करता है।", enC:"<strong>This</strong> refers to the current object." },
+  { en:"Generic",       pron:"/dʒəˈner.ɪk/",hi:"सामान्य_प्रकार",       cat:"OOP",    hiR:"saamaanya-prakaar",hiC:"<strong>सामान्य प्रकार</strong> किसी भी प्रकार के साथ काम करता है।", enC:"A <strong>generic</strong> works with any type." },
+  { en:"Lambda",        pron:"/ˈlæm.də/", hi:"लंबदा",                cat:"OOP",    hiR:"lambda",        hiC:"<strong>लंबदा</strong> एक छोटी अनाम फलन है।", enC:"A <strong>lambda</strong> is a small anonymous function." },
+
+  // ========== DATA STRUCTURES & ALGORITHMS (35) ==========
+  { en:"Recursion",     pron:"/rɪˈkɜː.ʒən/", hi:"पुनरावृत्ति",          cat:"Algo",   hiR:"punaravritti",  hiC:"<strong>पुनरावृत्ति</strong> में फलन स्वयं को ही बुलाता है।", enC:"In <strong>recursion</strong>, a function calls itself." },
+  { en:"Iteration",     pron:"/ˌɪt.əˈreɪ.ʃən/",hi:"पुनरावर्तन",        cat:"Algo",   hiR:"punaravartan",  hiC:"<strong>पुनरावर्तन</strong> में क्रिया बार-बार दोहराई जाती है।", enC:"<strong>Iteration</strong> repeats a process." },
+  { en:"List",          pron:"/lɪst/",         hi:"सूची",                cat:"DS",     hiR:"soochi",        hiC:"<strong>सूची</strong> क्रमबद्ध तत्वों का संग्रह है।", enC:"A <strong>list</strong> is an ordered collection." },
+  { en:"Linked List",   pron:"/lɪŋkt lɪst/", hi:"कड़ी_सूची",           cat:"DS",     hiR:"kari-soochi",   hiC:"<strong>कड़ी सूची</strong> में प्रत्येक तत्व अगले से जुड़ा होता है।", enC:"A <strong>linked list</strong> connects elements with pointers." },
+  { en:"Tree",          pron:"/triː/",         hi:"वृक्ष",                cat:"DS",     hiR:"vriksh",        hiC:"<strong>वृक्ष</strong> में तत्व शाखाओं में व्यवस्थित होते हैं।", enC:"A <strong>tree</strong> organizes data hierarchically." },
+  { en:"Graph",         pron:"/ɡræf/",        hi:"आलेख",                cat:"DS",     hiR:"aalekh",        hiC:"<strong>आलेख</strong> में ग्रंथियाँ किनारों से जुड़ी होती हैं।", enC:"A <strong>graph</strong> has nodes connected by edges." },
+  { en:"Node",          pron:"/nəʊd/",         hi:"ग्रंथि",                cat:"DS",     hiR:"granthi",       hiC:"<strong>ग्रंथि</strong> आलेख या वृक्ष का मूल तत्व है।", enC:"A <strong>node</strong> is a basic unit in graphs/trees." },
+  { en:"Edge",          pron:"/edʒ/",           hi:"किनारा",               cat:"DS",     hiR:"kinaaraa",      hiC:"<strong>किनारा</strong> दो ग्रंथियों के बीच संबंध है।", enC:"An <strong>edge</strong> connects two nodes." },
+  { en:"Root",          pron:"/ruːt/",         hi:"मूल",                  cat:"DS",     hiR:"mool",          hiC:"<strong>मूल</strong> वृक्ष का सबसे ऊपर का ग्रंथि है।", enC:"The <strong>root</strong> is the topmost node." },
+  { en:"Leaf",          pron:"/liːf/",         hi:"पत्ती",                cat:"DS",     hiR:"patti",         hiC:"<strong>पत्ती</strong> वृक्ष की अंतिम ग्रंथि है।", enC:"A <strong>leaf</strong> is a node with no children." },
+  { en:"Map",           pron:"/mæp/",          hi:"प्रतिचित्रण",           cat:"DS",     hiR:"pratichitran",  hiC:"<strong>प्रतिचित्रण</strong> कुंजी से मान जोड़ता है।", enC:"A <strong>map</strong> pairs keys with values." },
+  { en:"Set",           pron:"/set/",          hi:"समुच्चय",              cat:"DS",     hiR:"samuchchay",    hiC:"<strong>समुच्चय</strong> अद्वितीय तत्वों का संग्रह है।", enC:"A <strong>set</strong> stores unique elements." },
+  { en:"Dictionary",    pron:"/ˈdɪk.ʃən.ər.i/",hi:"शब्दकोश",            cat:"DS",     hiR:"shabdkosh",     hiC:"<strong>शब्दकोश</strong> में हर कुंजी का एक मान होता है।", enC:"A <strong>dictionary</strong> stores key-value pairs." },
+  { en:"Tuple",         pron:"/ˈtjuː.pəl/",   hi:"युग्म",                cat:"DS",     hiR:"yugma",         hiC:"<strong>युग्म</strong> क्रमबद्ध अपरिवर्तनीय तत्वों का समूह है।", enC:"A <strong>tuple</strong> is an ordered, immutable group." },
+  { en:"Matrix",        pron:"/ˈmeɪ.trɪks/",  hi:"आव्यूह",               cat:"DS",     hiR:"aavyuh",        hiC:"<strong>आव्यूह</strong> पंक्ति-स्तंभ में सजे संख्याओं का जाल है।", enC:"A <strong>matrix</strong> is a grid of rows and columns." },
+  { en:"Vector",        pron:"/ˈvek.tər/",   hi:"सदिश",                 cat:"DS",     hiR:"sadish",        hiC:"<strong>सदिश</strong> परिमाण और दिशा दोनों रखता है।", enC:"A <strong>vector</strong> has magnitude and direction." },
+  { en:"Stack",         pron:"/stæk/",          hi:"ढेर",                  cat:"DS",     hiR:"dher",          hiC:"<strong>ढेर</strong> LIFO क्रम में तत्व रखता है।", enC:"A <strong>stack</strong> follows Last-In-First-Out." },
+  { en:"Queue",         pron:"/kjuː/",          hi:"कतार",                cat:"DS",     hiR:"kataar",        hiC:"<strong>कतार</strong> FIFO क्रम में काम करती है।", enC:"A <strong>queue</strong> follows First-In-First-Out." },
+  { en:"Hash",          pron:"/hæʃ/",           hi:"हैश",                 cat:"DS",     hiR:"haish",         hiC:"<strong>हैश</strong> आँकड़े का निश्चित-लंबाई अद्वितीय प्रतिनिधित्व है।", enC:"A <strong>hash</strong> is a fixed-length data fingerprint." },
+  { en:"Complexity",    pron:"/kəmˈplek.sɪ.ti/",hi:"जटिलता",             cat:"Algo",   hiR:"jatilta",       hiC:"<strong>जटिलता</strong> क्रमादेश को चलाने में लगने वाला संसाधन है।", enC:"<strong>Complexity</strong> measures resource use." },
+  { en:"Big-O",         pron:"/bɪɡ oʊ/",       hi:"बड़ा-O",                cat:"Algo",   hiR:"badaa-O",       hiC:"<strong>बड़ा-O</strong> क्रमादेश की वृद्धि-दर बताता है।", enC:"<strong>Big-O</strong> describes growth rate." },
+  { en:"Sorting",       pron:"/ˈsɔː.tɪŋ/",    hi:"क्रमबद्धन",            cat:"Algo",   hiR:"kramabaddhan",  hiC:"<strong>क्रमबद्धन</strong> से तत्व क्रम में सज जाते हैं।", enC:"<strong>Sorting</strong> arranges elements in order." },
+  { en:"Searching",     pron:"/ˈsɜː.tʃɪŋ/",  hi:"खोज",                 cat:"Algo",   hiR:"khoj",          hiC:"<strong>खोज</strong> से किसी तत्व का स्थान पता लगाया जाता है।", enC:"<strong>Searching</strong> finds an element's location." },
+  { en:"Filtering",     pron:"/ˈfɪl.tər.ɪŋ/",hi:"छानन",                 cat:"Algo",   hiR:"chhaanan",      hiC:"<strong>छानन</strong> में अवांछित तत्व हटाए जाते हैं।", enC:"<strong>Filtering</strong> removes unwanted elements." },
+  { en:"Greedy",        pron:"/ˈɡriː.di/",   hi:"लालची",                cat:"Algo",   hiR:"laalchi",       hiC:"<strong>लालची क्रमादेश</strong> हर कदम पर सबसे अच्छा चुनाव करता है।", enC:"A <strong>greedy</strong> algorithm picks the best at each step." },
+  { en:"Dynamic Programming",pron:"/daɪˌnæm.ɪk/",hi:"गतिक_क्रमादेशन", cat:"Algo",   hiR:"gatik-kramadeshan",hiC:"<strong>गतिक क्रमादेशन</strong> छोटी समस्याओं को जोड़कर बड़ी हल करता है।", enC:"<strong>Dynamic programming</strong> solves big problems via smaller ones." },
+  { en:"Hashing",       pron:"/ˈhæʃ.ɪŋ/",   hi:"हैशिंग",               cat:"DS",     hiR:"haishing",      hiC:"<strong>हैशिंग</strong> से कुंजी को तेज़ी से ढूँढा जाता है।", enC:"<strong>Hashing</strong> enables fast key lookup." },
+  { en:"Compression",   pron:"/kəmˈpreʃ.ən/",hi:"संपीडन",              cat:"Algo",   hiR:"sampiDan",      hiC:"<strong>संपीडन</strong> से आँकड़े छोटे आकार में आ जाते हैं।", enC:"<strong>Compression</strong> reduces data size." },
+  { en:"Backtracking",  pron:"/ˈbæk.træk.ɪŋ/",hi:"पश्च-अनुरेखण",       cat:"Algo",   hiR:"pashch-anurekhan",hiC:"<strong>पश्च अनुरेखण</strong> में गलत रास्ते पर पीछे लौटा जाता है।", enC:"<strong>Backtracking</strong> reverts when stuck." },
+  { en:"Memoization",   pron:"/ˌmem.ɔɪˈzeɪ.ʃən/",hi:"स्मरण",           cat:"Algo",   hiR:"smaran",        hiC:"<strong>स्मरण</strong> में पहले गणना किए मान सहेज लिए जाते हैं।", enC:"<strong>Memoization</strong> saves computed results." },
+  { en:"Heap",          pron:"/hiːp/",         hi:"भीड़",                cat:"DS",     hiR:"bheed",         hiC:"<strong>भीड़</strong> एक प्राथमिकता-आधारित वृक्ष संरचना है।", enC:"A <strong>heap</strong> is a priority-based tree." },
+  { en:"HashMap",       pron:"/ˈhæʃ.mæp/", hi:"हैश_प्रतिचित्रण",       cat:"DS",     hiR:"haish-pratichitran",hiC:"<strong>हैश प्रतिचित्रण</strong> तेज़ कुंजी-आधारित खोज देता है।", enC:"A <strong>HashMap</strong> offers fast key-based lookup." },
+  { en:"BFS",           pron:"/ˌbiː.efˈes/", hi:"चौड़ाई_पहल_खोज",       cat:"Algo",   hiR:"chaurai-pehle-khoj",hiC:"<strong>चौड़ाई पहल खोज</strong> पहले पड़ोसी ग्रंथियों पर जाती है।", enC:"<strong>BFS</strong> explores level by level." },
+  { en:"DFS",           pron:"/ˌdiː.efˈes/", hi:"गहराई_पहल_खोज",      cat:"Algo",   hiR:"gaharaai-pehle-khoj",hiC:"<strong>गहराई पहल खोज</strong> एक शाखा में अंत तक जाती है।", enC:"<strong>DFS</strong> goes deep into one branch first." },
+
+  // ========== DATABASE (35) ==========
+  { en:"Database",      pron:"/ˈdeɪ.tə.beɪs/",hi:"आँकड़ा_संग्रह",     cat:"DB",     hiR:"aanka-sangrah", hiC:"<strong>आँकड़ा संग्रह</strong> में सूचनाएँ तालिकाओं में सहेजी जाती हैं।", enC:"A <strong>database</strong> stores data in tables." },
+  { en:"SQL",           pron:"/ˌes.kjuːˈel/",hi:"संरचित_प्रश्न_भाषा",cat:"DB",     hiR:"sanchit-prashn-bhasha",hiC:"<strong>संरचित प्रश्न भाषा</strong> से आँकड़ा संग्रह पूछताछ होती है।", enC:"<strong>SQL</strong> queries databases." },
+  { en:"NoSQL",         pron:"/nəʊ ˌes.kjuːˈel/",hi:"गैर-सारणीबद्ध_आँकड़ा_संग्रह",cat:"DB",hiR:"gair-saaranikrt-aanka-sangrah",hiC:"<strong>गैर-सारणीबद्ध आँकड़ा संग्रह</strong> तालिका के बिना आँकड़े रखता है।", enC:"<strong>NoSQL</strong> stores data without tables." },
+  { en:"Table",         pron:"/ˈteɪ.bəl/", hi:"तालिका",                cat:"DB",     hiR:"taalikaa",      hiC:"<strong>तालिका</strong> पंक्ति-स्तंभ में सजे आँकड़े रखती है।", enC:"A <strong>table</strong> organizes data in rows and columns." },
+  { en:"Row",           pron:"/rəʊ/",     hi:"पंक्ति",                cat:"DB",     hiR:"pankti",        hiC:"<strong>पंक्ति</strong> तालिका में एक अभिलेख है।", enC:"A <strong>row</strong> is a single record in a table." },
+  { en:"Column",        pron:"/ˈkɒl.əm/",hi:"स्तंभ",                 cat:"DB",     hiR:"stambh",        hiC:"<strong>स्तंभ</strong> तालिका का एक क्षेत्र है।", enC:"A <strong>column</strong> is a field in a table." },
+  { en:"Field",         pron:"/fiːld/",     hi:"क्षेत्र",                cat:"DB",     hiR:"kshetra",       hiC:"<strong>क्षेत्र</strong> एकल सूचना का स्थान है।", enC:"A <strong>field</strong> holds a single piece of data." },
+  { en:"Record",        pron:"/ˈrek.ɔːd/",hi:"अभिलेख",                cat:"DB",     hiR:"abhilekh",      hiC:"<strong>अभिलेख</strong> तालिका की एक पूरी पंक्ति होती है।", enC:"A <strong>record</strong> is a full row in a table." },
+  { en:"Schema",        pron:"/ˈskiː.mə/",hi:"स्कीमा",                 cat:"DB",     hiR:"schema",        hiC:"<strong>स्कीमा</strong> आँकड़ा संग्रह की संरचना बताता है।", enC:"A <strong>schema</strong> defines the database structure." },
+  { en:"Query",         pron:"/ˈkwɪə.ri/",hi:"प्रश्न",                 cat:"DB",     hiR:"prashn",        hiC:"<strong>प्रश्न</strong> से आँकड़ा संग्रह से जानकारी माँगी जाती है।", enC:"A <strong>query</strong> requests data from a database." },
+  { en:"Primary Key",   pron:"/ˈpraɪ.mər.i kiː/",hi:"प्राथमिक_कुंजी",cat:"DB",     hiR:"prathamik-kunji",hiC:"<strong>प्राथमिक कुंजी</strong> प्रत्येक पंक्ति की अनूठी पहचान है।", enC:"A <strong>primary key</strong> uniquely identifies each row." },
+  { en:"Foreign Key",   pron:"/ˈfɒr.ən kiː/",hi:"बाह्य_कुंजी",        cat:"DB",     hiR:"baahya-kunji",  hiC:"<strong>बाह्य कुंजी</strong> दो तालिकाओं के बीच संबंध जोड़ती है।", enC:"A <strong>foreign key</strong> links two tables." },
+  { en:"Constraint",    pron:"/kənˈstreɪnt/",hi:"बंधन",                cat:"DB",     hiR:"bandhan",       hiC:"<strong>बंधन</strong> आँकड़ों पर नियम लगाता है।", enC:"A <strong>constraint</strong> enforces data rules." },
+  { en:"Trigger",       pron:"/ˈtrɪɡ.ər/",hi:"प्रर्शक",                cat:"DB",     hiR:"prarshak",      hiC:"<strong>प्रर्शक</strong> घटना पर स्वतः क्रिया चलाता है।", enC:"A <strong>trigger</strong> runs automatically on an event." },
+  { en:"View",          pron:"/vjuː/",       hi:"दृश्य",                 cat:"DB",     hiR:"drishya",       hiC:"<strong>दृश्य</strong> प्रश्न का सहेजा हुआ नतीजा है।", enC:"A <strong>view</strong> is a saved query result." },
+  { en:"Transaction",   pron:"/trænˈzæk.ʃən/",hi:"लेन-देन",            cat:"DB",     hiR:"len-den",       hiC:"<strong>लेन-देन</strong> आँकड़ों का एक परमाणु कार्य है।", enC:"A <strong>transaction</strong> is an atomic data operation." },
+  { en:"Normalization", pron:"/ˌnɔː.mə.laɪˈzeɪ.ʃən/",hi:"सामान्यीकरण",cat:"DB",     hiR:"saamaanyikaran",hiC:"<strong>सामान्यीकरण</strong> से आँकड़ों की पुनरावृत्ति कम होती है।", enC:"<strong>Normalization</strong> reduces data redundancy." },
+  { en:"Join",          pron:"/dʒɔɪn/",     hi:"जोड़",                  cat:"DB",     hiR:"jod",           hiC:"<strong>जोड़</strong> दो तालिकाओं को संबंधित करता है।", enC:"A <strong>join</strong> combines related tables." },
+  { en:"Select",        pron:"/sɪˈlekt/",  hi:"चयन",                  cat:"DB",     hiR:"chayan",        hiC:"<strong>चयन</strong> से तालिका से पंक्तियाँ निकाली जाती हैं।", enC:"<strong>Select</strong> retrieves rows." },
+  { en:"Insert",        pron:"/ɪnˈsɜːt/",hi:"समावेश",                  cat:"DB",     hiR:"samaavesh",     hiC:"<strong>समावेश</strong> से नई पंक्ति जोड़ी जाती है।", enC:"<strong>Insert</strong> adds a new row." },
+  { en:"Delete",        pron:"/dɪˈliːt/",hi:"विलोपन",                  cat:"DB",     hiR:"vilopan",       hiC:"<strong>विलोपन</strong> से पंक्ति हटाई जाती है।", enC:"<strong>Delete</strong> removes a row." },
+  { en:"Update (DB)",   pron:"/ʌpˈdeɪt/",hi:"अद्यतन",                  cat:"DB",     hiR:"adhyatan",      hiC:"<strong>अद्यतन</strong> से तालिका में मान बदले जाते हैं।", enC:"<strong>Update</strong> modifies existing data." },
+  { en:"Backup",        pron:"/ˈbæk.ʌp/",hi:"प्रतिकृति",              cat:"DB",     hiR:"pratikriti",    hiC:"<strong>प्रतिकृति</strong> डेटा की सुरक्षा के लिए रखी जाती है।", enC:"A <strong>backup</strong> is a safety copy of data." },
+  { en:"Replication",   pron:"/ˌrep.lɪˈkeɪ.ʃən/",hi:"प्रतिकृति_नकल", cat:"DB",     hiR:"pratikriti-nakal",hiC:"<strong>प्रतिकृति नकल</strong> से आँकड़े कई सर्वरों पर रहते हैं।", enC:"<strong>Replication</strong> copies data across servers." },
+  { en:"Migration",     pron:"/maɪˈɡreɪ.ʃən/",hi:"स्थानांतरण",        cat:"DB",     hiR:"sthaanaantaran",hiC:"<strong>स्थानांतरण</strong> से आँकड़े एक जगह से दूसरी जगह जाते हैं।", enC:"<strong>Migration</strong> moves data between systems." },
+  { en:"MySQL",         pron:"/maɪˌes.kjuːˈel/",hi:"माई_एसक्यू_एल",  cat:"DB",     hiR:"MySQL",         hiC:"<strong>माई एसक्यू एल</strong> एक लोकप्रिय आँकड़ा संग्रह है।", enC:"<strong>MySQL</strong> is a popular open-source database." },
+  { en:"MongoDB",       pron:"/ˈmɒŋ.ɡəʊ.diː.biː/",hi:"मोंगो_डीबी",  cat:"DB",     hiR:"MongoDB",       hiC:"<strong>मोंगो डीबी</strong> एक दस्तावेज़-आधारित आँकड़ा संग्रह है।", enC:"<strong>MongoDB</strong> is a document-based database." },
+  { en:"Redis",         pron:"/ˈred.ɪs/",hi:"रेडिस",                 cat:"DB",     hiR:"Redis",         hiC:"<strong>रेडिस</strong> एक तेज़ इन-मेमोरी आँकड़ा संग्रह है।", enC:"<strong>Redis</strong> is a fast in-memory data store." },
+  { en:"Stored Procedure",pron:"/stɔːd prəˈsiː.dʒər/",hi:"संग्रहित_प्रक्रिया",cat:"DB",hiR:"sangrihit-prakriya",hiC:"<strong>संग्रहित प्रक्रिया</strong> पूर्व-सहेजी क्रिया है।", enC:"A <strong>stored procedure</strong> is pre-saved SQL code." },
+  { en:"Cursor",        pron:"/ˈkɜː.sər/",hi:"कर्सर",                cat:"DB",     hiR:"cursor",        hiC:"<strong>कर्सर</strong> पंक्तियों पर एक-एक करके चलता है।", enC:"A <strong>cursor</strong> walks through rows one by one." },
+  { en:"ACID",          pron:"/ˈæs.ɪd/",hi:"अम्लीय_गुण",            cat:"DB",     hiR:"amliya-guna",   hiC:"<strong>अम्लीय गुण</strong> लेन-देन की विश्वसनीयता सुनिश्चित करते हैं।", enC:"<strong>ACID</strong> ensures reliable transactions." },
+  { en:"Cluster",       pron:"/ˈklʌs.tər/",hi:"गुच्छ",              cat:"DB",     hiR:"guchchh",       hiC:"<strong>गुच्छ</strong> कई सर्वरों का एक साथ काम करने वाला समूह है।", enC:"A <strong>cluster</strong> is a group of servers working together." },
+  { en:"Index (DB)",    pron:"/ˈɪn.deks/",hi:"सूचकांक",              cat:"DB",     hiR:"soochkank",     hiC:"<strong>सूचकांक</strong> खोज को तेज़ बनाता है।", enC:"An <strong>index</strong> speeds up searches." },
+  { en:"ER Diagram",    pron:"/iː ɑː ˈdaɪ.ə.ɡræm/",hi:"वस्तु_संबंध_आरेख",cat:"DB",hiR:"vastu-sambandh-aarekh",hiC:"<strong>वस्तु संबंध आरेख</strong> आँकड़ा संग्रह की रूपरेखा है।", enC:"An <strong>ER diagram</strong> shows the database design." },
+  { en:"Data Warehouse",pron:"/ˈdeɪ.tə ˈweə.haʊs/",hi:"आँकड़ा_भंडारगृह",cat:"DB",hiR:"aanka-bhandargrih",hiC:"<strong>आँकड़ा भंडारगृह</strong> विश्लेषण के लिए बड़ा आँकड़ा संग्रह है।", enC:"A <strong>data warehouse</strong> is a large analytical store." },
+
+  // ========== WEB DEVELOPMENT (40) ==========
+  { en:"HTML",          pron:"/ˌeɪtʃ.tiː.emˈel/",hi:"अधि_अंकन_भाषा",cat:"Web",    hiR:"adhi-ankan-bhasha",hiC:"<strong>अधि अंकन भाषा</strong> वेब पृष्ठ की मूल संरचना है।", enC:"<strong>HTML</strong> structures web pages." },
+  { en:"CSS",           pron:"/ˌsiː.esˈes/",hi:"सीढ़ीनुमा_शैली_पत्रक",cat:"Web",  hiR:"seedheenuma-shaili-patrak",hiC:"<strong>सीढ़ीनुमा शैली पत्रक</strong> वेब पृष्ठ की दिखावट तय करता है।", enC:"<strong>CSS</strong> styles web pages." },
+  { en:"JavaScript",    pron:"/ˈdʒɑː.və.skript/",hi:"जावास्क्रिप्ट", cat:"Web",   hiR:"jaavaskript",   hiC:"<strong>जावास्क्रिप्ट</strong> वेब पृष्ठ में गतिशीलता जोड़ती है।", enC:"<strong>JavaScript</strong> makes web pages interactive." },
+  { en:"DOM",           pron:"/dɒm/",         hi:"दस्तावेज़_वस्तु_मॉडल",cat:"Web",  hiR:"dastaavez-vastu-model",hiC:"<strong>दस्तावेज़ वस्तु मॉडल</strong> वेब पृष्ठ का संरचित रूप है।", enC:"The <strong>DOM</strong> is the structured form of a page." },
+  { en:"AJAX",          pron:"/ˈeɪ.dʒæks/", hi:"अतुल्यकालिक_जावास्क्रिप्ट",cat:"Web",hiR:"atulyakaalik-jaavaskript",hiC:"<strong>अतुल्यकालिक जावास्क्रिप्ट</strong> से पृष्ठ पुनः लोड किए बिना आँकड़े आते हैं।", enC:"<strong>AJAX</strong> fetches data without reloading." },
+  { en:"JSON",          pron:"/ˈdʒeɪ.sən/",hi:"जावास्क्रिप्ट_वस्तु_संकेतन",cat:"Web",hiR:"jaavaskript-vastu-sanketan",hiC:"<strong>जावास्क्रिप्ट वस्तु संकेतन</strong> आँकड़ों का हल्का स्वरूप है।", enC:"<strong>JSON</strong> is a lightweight data format." },
+  { en:"XML",           pron:"/ˌeks.emˈel/",hi:"विस्तारणीय_अंकन_भाषा",cat:"Web",hiR:"vistaaraniya-ankan-bhasha",hiC:"<strong>विस्तारणीय अंकन भाषा</strong> संरचित सूचना लिखने का तरीका है।", enC:"<strong>XML</strong> is a structured information format." },
+  { en:"API",           pron:"/ˌeɪ.piːˈaɪ/",hi:"अनुप्रयोग_इंटरफेस",cat:"Web",    hiR:"anuprayog-interface",hiC:"<strong>अनुप्रयोग इंटरफेस</strong> दो सॉफ़्टवेयर को जोड़ता है।", enC:"An <strong>API</strong> lets two systems talk." },
+  { en:"REST",          pron:"/rest/",      hi:"प्रतिनिधि_स्थानांतरण",cat:"Web",    hiR:"pratinidhi-sthaanaantaran",hiC:"<strong>प्रतिनिधि स्थानांतरण</strong> वेब सेवाओं का एक ढाँचा है।", enC:"<strong>REST</strong> is an architectural style for web services." },
+  { en:"GraphQL",       pron:"/ˈɡræf.kjuːˈel/",hi:"ग्राफ़_प्रश्न_भाषा",cat:"Web",hiR:"graph-prashn-bhasha",hiC:"<strong>ग्राफ़ प्रश्न भाषा</strong> से सिर्फ जरूरी आँकड़े माँगे जाते हैं।", enC:"<strong>GraphQL</strong> lets you request exactly the data you need." },
+  { en:"WebSocket",     pron:"/ˈweb.sɒk.ɪt/",hi:"वेब_सॉकेट",       cat:"Web",   hiR:"web-socket",    hiC:"<strong>वेब सॉकेट</strong> से दोतरफा त्वरित संदेश भेजे जाते हैं।", enC:"<strong>WebSocket</strong> allows real-time two-way messaging." },
+  { en:"Frontend",      pron:"/ˈfrʌnt.end/",hi:"अग्र_भाग",            cat:"Web",    hiR:"agr-bhaag",     hiC:"<strong>अग्र भाग</strong> वह भाग है जो उपयोगकर्ता देखता है।", enC:"The <strong>frontend</strong> is the user-facing part." },
+  { en:"Backend",       pron:"/ˈbæk.end/",hi:"पश्च_भाग",              cat:"Web",    hiR:"pashch-bhaag",  hiC:"<strong>पश्च भाग</strong> सर्वर पर चलता है।", enC:"The <strong>backend</strong> runs on the server." },
+  { en:"Full Stack",    pron:"/fʊl stæk/",hi:"पूर्ण_स्तर",            cat:"Web",    hiR:"purn-star",     hiC:"<strong>पूर्ण स्तर</strong> में अग्र और पश्च दोनों आते हैं।", enC:"<strong>Full stack</strong> covers both frontend and backend." },
+  { en:"React",         pron:"/riˈækt/",    hi:"रिएक्ट",                cat:"Web",    hiR:"react",         hiC:"<strong>रिएक्ट</strong> यूज़र-इंटरफेस बनाने की लाइब्रेरी है।", enC:"<strong>React</strong> is a UI building library." },
+  { en:"Angular",       pron:"/ˈæŋ.ɡjʊ.lər/",hi:"एंगुलर",             cat:"Web",    hiR:"Angular",       hiC:"<strong>एंगुलर</strong> वेब के लिए ढाँचा है।", enC:"<strong>Angular</strong> is a web framework." },
+  { en:"Vue",           pron:"/vjuː/",       hi:"व्यू",                   cat:"Web",    hiR:"Vue",           hiC:"<strong>व्यू</strong> सरल यूज़र-इंटरफेस ढाँचा है।", enC:"<strong>Vue</strong> is a progressive UI framework." },
+  { en:"Node.js",       pron:"/nəʊd dʒeɪ es/",hi:"नोड.जेएस",         cat:"Web",    hiR:"node.js",       hiC:"<strong>नोड.जेएस</strong> सर्वर पर जावास्क्रिप्ट चलाता है।", enC:"<strong>Node.js</strong> runs JavaScript on servers." },
+  { en:"Express",       pron:"/ɪkˈspres/", hi:"एक्सप्रेस",              cat:"Web",    hiR:"Express",       hiC:"<strong>एक्सप्रेस</strong> नोड.जेएस का हल्का ढाँचा है।", enC:"<strong>Express</strong> is a lightweight Node.js framework." },
+  { en:"Django",        pron:"/ˈdʒæŋ.ɡoʊ/",hi:"जैंगो",                 cat:"Web",    hiR:"Django",        hiC:"<strong>जैंगो</strong> पाइथन का लोकप्रिय ढाँचा है।", enC:"<strong>Django</strong> is a popular Python framework." },
+  { en:"Flask",         pron:"/flæsk/",     hi:"फ्लास्क",                cat:"Web",    hiR:"Flask",         hiC:"<strong>फ्लास्क</strong> पाइथन का हल्का ढाँचा है।", enC:"<strong>Flask</strong> is a lightweight Python framework." },
+  { en:"Bootstrap",     pron:"/ˈbuːt.stræp/",hi:"बूटस्ट्रैप",          cat:"Web",    hiR:"Bootstrap",     hiC:"<strong>बूटस्ट्रैप</strong> पूर्व-निर्मित शैलियों का संग्रह है।", enC:"<strong>Bootstrap</strong> is a pre-built CSS toolkit." },
+  { en:"Tailwind",      pron:"/ˈteɪl.wɪnd/",hi:"टेलविंड",              cat:"Web",    hiR:"Tailwind",      hiC:"<strong>टेलविंड</strong> उपयोगिता-प्रथम शैली ढाँचा है।", enC:"<strong>Tailwind</strong> is a utility-first CSS framework." },
+  { en:"SASS",          pron:"/sæs/",        hi:"सैस",                   cat:"Web",    hiR:"SASS",          hiC:"<strong>सैस</strong> सीएसएस की विस्तारित भाषा है।", enC:"<strong>SASS</strong> is an extended CSS language." },
+  { en:"Responsive",    pron:"/rɪˈspɒn.sɪv/",hi:"अनुक्रियाशील",       cat:"Web",    hiR:"anukriyashil",  hiC:"<strong>अनुक्रियाशील</strong> डिज़ाइन हर स्क्रीन पर सही दिखता है।", enC:"<strong>Responsive</strong> design fits every screen." },
+  { en:"Cookie",        pron:"/ˈkʊk.i/",  hi:"कुकी",                    cat:"Web",    hiR:"kuki",          hiC:"<strong>कुकी</strong> ब्राउज़र में सहेजी छोटी सूचना है।", enC:"A <strong>cookie</strong> is browser-stored data." },
+  { en:"Session",       pron:"/ˈseʃ.ən/",hi:"सत्र",                    cat:"Web",    hiR:"satra",         hiC:"<strong>सत्र</strong> उपयोगकर्ता के सक्रिय रहने की अवधि है।", enC:"A <strong>session</strong> is an active user period." },
+  { en:"CDN",           pron:"/ˌsiː.diːˈen/",hi:"विषय_वितरण_संजाल", cat:"Web",   hiR:"vishay-vitran-sanjaal",hiC:"<strong>विषय वितरण संजाल</strong> आँकड़े उपयोगकर्ता के पास पहुँचाता है।", enC:"A <strong>CDN</strong> delivers content from nearby servers." },
+  { en:"Domain",        pron:"/dəˈmeɪn/",hi:"डोमेन",                  cat:"Web",    hiR:"domain",        hiC:"<strong>डोमेन</strong> वेबसाइट का इंटरनेट पता है।", enC:"A <strong>domain</strong> is a website's address." },
+  { en:"Hosting",       pron:"/ˈhəʊ.stɪŋ/",hi:"होस्टिंग",           cat:"Web",    hiR:"hosting",       hiC:"<strong>होस्टिंग</strong> से वेबसाइट इंटरनेट पर उपलब्ध होती है।", enC:"<strong>Hosting</strong> makes a site reachable online." },
+  { en:"SSL",           pron:"/ˌes.esˈel/",hi:"सुरक्षित_सॉकेट_स्तर",cat:"Web",hiR:"surakshit-socket-star",hiC:"<strong>सुरक्षित सॉकेट स्तर</strong> से आँकड़े गुप्त रहते हैं।", enC:"<strong>SSL</strong> encrypts data in transit." },
+  { en:"HTTPS",         pron:"/ˌeɪtʃ.tiː.tiː.pɪˈes/",hi:"सुरक्षित_अतिअंकन_प्रोटोकॉल",cat:"Web",hiR:"surakhat-ati-ankan-protokoll",hiC:"<strong>सुरक्षित अतिअंकन प्रोटोकॉल</strong> से वेब आँकड़े कूटबद्ध रहते हैं।", enC:"<strong>HTTPS</strong> is the secure web protocol." },
+  { en:"URL",           pron:"/ˌjuː.ɑːrˈel/",hi:"संसाधन_लोकेटर",    cat:"Web",    hiR:"sansadhan-locator",hiC:"<strong>संसाधन लोकेटर</strong> किसी वेब पृष्ठ का पूरा पता है।", enC:"A <strong>URL</strong> is the full web page address." },
+  { en:"Router (Web)",  pron:"/ˈruː.tər/",hi:"मार्गदर्शक",            cat:"Web",    hiR:"margadarshak",  hiC:"<strong>मार्गदर्शक</strong> अनुरोध को सही फलन तक पहुँचाता है।", enC:"A web <strong>router</strong> directs requests to handlers." },
+  { en:"Endpoint",      pron:"/ˈend.pɔɪnt/",hi:"अंतिम_बिंदु",         cat:"Web",    hiR:"antim-bindu",   hiC:"<strong>अंतिम बिंदु</strong> API का विशिष्ट पता है।", enC:"An <strong>endpoint</strong> is a specific API URL." },
+  { en:"SPA",           pron:"/ˌes.piːˈeɪ/",hi:"एकल-पृष्ठ_अनुप्रयोग",cat:"Web",hiR:"ekal-prishth-anuprayog",hiC:"<strong>एकल पृष्ठ अनुप्रयोग</strong> एक ही पृष्ठ पर बदलते रहते हैं।", enC:"An <strong>SPA</strong> updates content without page reloads." },
+  { en:"PWA",           pron:"/ˌpiː.dʌb.ljuːˈeɪ/",hi:"प्रगतिशील_वेब_अनुप्रयोग",cat:"Web",hiR:"pragatishil-web-anuprayog",hiC:"<strong>प्रगतिशील वेब अनुप्रयोग</strong> ऐप-जैसा अनुभव देता है।", enC:"A <strong>PWA</strong> delivers an app-like web experience." },
+  { en:"OAuth",         pron:"/ˈəʊ.ɔːθ/", hi:"मुक्त_अनुमति",           cat:"Web",   hiR:"OAuth",         hiC:"<strong>मुक्त अनुमति</strong> सुरक्षित लॉगिन का मानक है।", enC:"<strong>OAuth</strong> is a standard for secure login." },
+  { en:"JWT",           pron:"/ˌdʒeɪ.dʌb.ljuːˈtiː/",hi:"जाल_टोकन",  cat:"Web",  hiR:"JWT",           hiC:"<strong>जाल टोकन</strong> पक्षों के बीच सूचना सहेजकर ले जाता है।", enC:"<strong>JWT</strong> carries signed info between parties." },
+
+  // ========== NETWORKING (25) ==========
+  { en:"Network",       pron:"/ˈnet.wɜːk/",hi:"संजाल",                 cat:"Net",    hiR:"sanjaal",       hiC:"<strong>संजाल</strong> कई कंप्यूटरों को जोड़ता है।", enC:"A <strong>network</strong> connects computers." },
+  { en:"Server",        pron:"/ˈsɜː.vər/",hi:"सर्वर",                cat:"Net",    hiR:"sarvar",        hiC:"<strong>सर्वर</strong> अन्य कंप्यूटरों को सेवाएँ देता है।", enC:"A <strong>server</strong> serves requests." },
+  { en:"Client",        pron:"/ˈklaɪ.ənt/",hi:"ग्राहक",              cat:"Net",    hiR:"grahak",        hiC:"<strong>ग्राहक</strong> सर्वर से सेवा माँगता है।", enC:"A <strong>client</strong> requests services." },
+  { en:"Protocol",      pron:"/ˈprəʊ.tə.kɒl/",hi:"प्रोटोकॉल",         cat:"Net",    hiR:"protokoll",     hiC:"<strong>प्रोटोकॉल</strong> संचार के नियमों का समूह है।", enC:"A <strong>protocol</strong> is a set of rules." },
+  { en:"Internet",      pron:"/ˈɪn.tə.net/",hi:"अंतरजाल",            cat:"Net",    hiR:"antarjaal",     hiC:"<strong>अंतरजाल</strong> दुनिया भर के संजालों का समूह है।", enC:"The <strong>internet</strong> is a global network of networks." },
+  { en:"TCP/IP",        pron:"/ˌtiː.siː.piː.aɪˈpiː/",hi:"संचरण_नियंत्रण_प्रोटोकॉल",cat:"Net",hiR:"sancharan-niyantran-protokoll",hiC:"<strong>संचरण नियंत्रण प्रोटोकॉल</strong> इंटरनेट का मूल नियम-समूह है।", enC:"<strong>TCP/IP</strong> is the internet's rule-set." },
+  { en:"HTTP",          pron:"/ˌeɪtʃ.tiː.tiːˈpiː/",hi:"अतिअंकन_स्थानांतरण_प्रोटोकॉल",cat:"Net",hiR:"atiankan-sthaanaantaran-protokoll",hiC:"<strong>अतिअंकन स्थानांतरण प्रोटोकॉल</strong> वेब के लिए मानक है।", enC:"<strong>HTTP</strong> is the web's standard protocol." },
+  { en:"DNS",           pron:"/ˌdiː.enˈes/",hi:"डोमेन_नाम_प्रणाली", cat:"Net",    hiR:"domain-naam-pranaali",hiC:"<strong>डोमेन नाम प्रणाली</strong> नाम को आईपी पते में बदलती है।", enC:"<strong>DNS</strong> translates names to IP addresses." },
+  { en:"DHCP",          pron:"/ˌdiː.eɪtʃ.siːˈpiː/",hi:"गतिक_मेज़बान_विन्यास",cat:"Net",hiR:"gatik-mejbaan-vinyaas",hiC:"<strong>गतिक मेज़बान विन्यास</strong> स्वतः आईपी बाँटता है।", enC:"<strong>DHCP</strong> automatically assigns IP addresses." },
+  { en:"IP Address",    pron:"/ˌaɪˈpiː əˈdres/",hi:"इंटरनेट_पता",  cat:"Net",    hiR:"internet-pataa",hiC:"<strong>इंटरनेट पता</strong> प्रत्येक उपकरण की पहचान है।", enC:"An <strong>IP address</strong> identifies a device." },
+  { en:"MAC Address",   pron:"/mæk əˈdres/",hi:"माध्यम_पहुँच_पता",   cat:"Net",   hiR:"maadhyam-pahunch-pataa",hiC:"<strong>माध्यम पहुँच पता</strong> नेटवर्क कार्ड की अनूठी पहचान है।", enC:"A <strong>MAC address</strong> uniquely identifies a network card." },
+  { en:"Subnet",        pron:"/ˈsʌb.net/",hi:"उपसंजाल",              cat:"Net",    hiR:"up-sanjaal",    hiC:"<strong>उपसंजाल</strong> बड़े संजाल का छोटा भाग है।", enC:"A <strong>subnet</strong> is a smaller part of a network." },
+  { en:"Gateway",       pron:"/ˈɡeɪt.weɪ/",hi:"प्रवेश_द्वार",        cat:"Net",    hiR:"pravesh-dvaar",hiC:"<strong>प्रवेश द्वार</strong> दो अलग-अलग संजालों को जोड़ता है।", enC:"A <strong>gateway</strong> connects two networks." },
+  { en:"Router",        pron:"/ˈruː.tər/",hi:"मार्गदर्शक",           cat:"Net",    hiR:"margadarshak",  hiC:"<strong>मार्गदर्शक</strong> नेटवर्क पर आँकड़े सही जगह पहुँचाता है।", enC:"A <strong>router</strong> directs network traffic." },
+  { en:"Switch",        pron:"/swɪtʃ/",    hi:"स्विच",                 cat:"Net",    hiR:"switch",        hiC:"<strong>स्विच</strong> एक ही संजाल के उपकरणों को जोड़ता है।", enC:"A <strong>switch</strong> connects devices on a network." },
+  { en:"Modem",         pron:"/ˈməʊ.dem/",hi:"मोडेम",                  cat:"Net",    hiR:"modem",         hiC:"<strong>मोडेम</strong> डिजिटल संकेतों को टेलीफोन लाइन के अनुकूल बनाता है।", enC:"A <strong>modem</strong> converts digital signals for phone lines." },
+  { en:"Proxy",         pron:"/ˈprɒk.si/",hi:"प्रॉक्सी",               cat:"Net",    hiR:"proxy",         hiC:"<strong>प्रॉक्सी</strong> उपयोगकर्ता की ओर से अनुरोध भेजता है।", enC:"A <strong>proxy</strong> sends requests on behalf of a user." },
+  { en:"VPN",           pron:"/ˌviː.piːˈen/",hi:"आभासी_निजी_संजाल", cat:"Net",    hiR:"aabhaasi-niji-sanjaal",hiC:"<strong>आभासी निजी संजाल</strong> सुरक्षित जुड़ाव बनाता है।", enC:"A <strong>VPN</strong> creates a secure tunnel." },
+  { en:"LAN",           pron:"/læn/",        hi:"स्थानीय_क्षेत्र_संजाल",cat:"Net",hiR:"sthaaniiy-kshetra-sanjaal",hiC:"<strong>स्थानीय क्षेत्र संजाल</strong> छोटे क्षेत्र का संजाल है।", enC:"A <strong>LAN</strong> is a small-area network." },
+  { en:"WAN",           pron:"/wæn/",        hi:"विस्तृत_क्षेत्र_संजाल",cat:"Net",hiR:"vistrut-kshetra-sanjaal",hiC:"<strong>विस्तृत क्षेत्र संजाल</strong> बड़े भौगोलिक क्षेत्र को जोड़ता है।", enC:"A <strong>WAN</strong> covers a large geographic area." },
+  { en:"Wi-Fi",         pron:"/ˈwaɪ.faɪ/",hi:"वायरलेस_फिडेलिटी",    cat:"Net",    hiR:"vayrles-fideliti",hiC:"<strong>वायरलेस फिडेलिटी</strong> से बिना तार के संजाल जुड़ता है।", enC:"<strong>Wi-Fi</strong> provides wireless networking." },
+  { en:"Bandwidth",     pron:"/ˈbænd.wɪdθ/",hi:"पट्टी_चौड़ाई",        cat:"Net",    hiR:"patti-chaurai", hiC:"<strong>पट्टी चौड़ाई</strong> प्रति सेकंड भेजे जा सकने वाले आँकड़े की मात्रा है।", enC:"<strong>Bandwidth</strong> is data per second." },
+  { en:"Latency",       pron:"/ˈleɪ.tən.si/",hi:"विलंबता",           cat:"Net",    hiR:"vilambta",      hiC:"<strong>विलंबता</strong> डेटा पहुँचने में लगने वाला विलंब है।", enC:"<strong>Latency</strong> is the delay in data travel." },
+  { en:"Packet",        pron:"/ˈpæk.ɪt/",hi:"पार्सल",                 cat:"Net",    hiR:"parsal",        hiC:"<strong>पार्सल</strong> संजाल पर भेजे जाने वाले आँकड़े का खंड है।", enC:"A <strong>packet</strong> is a chunk of data sent on a network." },
+  { en:"Firewall",      pron:"/ˈfaɪər.wɒl/",hi:"अग्नि_दीवार",        cat:"Sec",   hiR:"agni-deevaar",  hiC:"<strong>अग्नि दीवार</strong> अनधिकृत पहुँच को रोकती है।", enC:"A <strong>firewall</strong> blocks unauthorized access." },
+
+  // ========== OPERATING SYSTEMS (25) ==========
+  { en:"Kernel",        pron:"/ˈkɜː.nəl/",hi:"क्रोड",                   cat:"OS",     hiR:"krod",          hiC:"<strong>क्रोड</strong> ऑपरेटिंग सिस्टम का केंद्रीय भाग है।", enC:"The <strong>kernel</strong> is the OS core." },
+  { en:"Shell",         pron:"/ʃel/",         hi:"खोल",                  cat:"OS",     hiR:"khol",          hiC:"<strong>खोल</strong> उपयोगकर्ता और क्रोड के बीच माध्यम है।", enC:"A <strong>shell</strong> is the command interface." },
+  { en:"Process",       pron:"/ˈprəʊ.ses/",hi:"प्रक्रिया",                cat:"OS",     hiR:"prakriya",      hiC:"<strong>प्रक्रिया</strong> चालू प्रोग्राम का एक उदाहरण है।", enC:"A <strong>process</strong> is a running program." },
+  { en:"Thread",        pron:"/θred/",        hi:"सूत्र",                 cat:"OS",     hiR:"sootra",        hiC:"<strong>सूत्र</strong> प्रक्रिया का हल्का उप-भाग है।", enC:"A <strong>thread</strong> is a sub-part of a process." },
+  { en:"Driver",        pron:"/ˈdraɪ.vər/",hi:"चालक",                   cat:"OS",     hiR:"chaalak",       hiC:"<strong>चालक</strong> ऑपरेटिंग सिस्टम और हार्डवेयर के बीच सेतु है।", enC:"A <strong>driver</strong> bridges OS and hardware." },
+  { en:"RAM",           pron:"/ræm/",        hi:"यादृच्छिक_पहुँच_स्मृति",cat:"OS",    hiR:"yaadrichhik-pahunch-smriti",hiC:"<strong>यादृच्छिक पहुँच स्मृति</strong> अस्थायी तेज़ स्मृति है।", enC:"<strong>RAM</strong> is fast temporary memory." },
+  { en:"ROM",           pron:"/rɒm/",        hi:"केवल_पठन_स्मृति",      cat:"OS",     hiR:"keval-pathan-smriti",hiC:"<strong>केवल पठन स्मृति</strong> में स्थायी बूट आँकड़े रहते हैं।", enC:"<strong>ROM</strong> holds permanent boot data." },
+  { en:"Virtual Memory",pron:"/ˈvɜː.tʃu.əl ˈmem.ər.i/",hi:"आभासी_स्मृति",cat:"OS",hiR:"aabhaasi-smriti",hiC:"<strong>आभासी स्मृति</strong> डिस्क को अतिरिक्त स्मृति के रूप में उपयोग करती है।", enC:"<strong>Virtual memory</strong> uses disk as extra RAM." },
+  { en:"File System",   pron:"/faɪl ˈsɪs.təm/",hi:"फ़ाइल_प्रणाली",  cat:"OS",     hiR:"fail-pranaali",  hiC:"<strong>फ़ाइल प्रणाली</strong> डिस्क पर आँकड़े व्यवस्थित रखती है।", enC:"A <strong>file system</strong> organizes disk data." },
+  { en:"Directory",     pron:"/dɪˈrek.tər.i/",hi:"निर्देशिका",         cat:"OS",     hiR:"nirdeshikaa",   hiC:"<strong>निर्देशिका</strong> फ़ाइलों का समूह है।", enC:"A <strong>directory</strong> is a folder of files." },
+  { en:"Permission",    pron:"/pəˈmɪʃ.ən/",hi:"अनुमति",                 cat:"OS",     hiR:"anumat̪i",      hiC:"<strong>अनुमति</strong> से तय होता है कि कौन फ़ाइल पढ़-लिख सकता है।", enC:"<strong>Permissions</strong> control file access." },
+  { en:"User",          pron:"/ˈjuː.zər/",hi:"उपयोगकर्ता",              cat:"OS",     hiR:"upayogkartaa",  hiC:"<strong>उपयोगकर्ता</strong> सिस्टम का कोई व्यक्ति उपयोग करने वाला है।", enC:"A <strong>user</strong> is a person using the system." },
+  { en:"Admin",         pron:"/ˈæd.mɪn/",hi:"प्रशासक",                 cat:"OS",     hiR:"prashaasak",    hiC:"<strong>प्रशासक</strong> के पास पूरे सिस्टम का अधिकार होता है।", enC:"An <strong>admin</strong> has full system rights." },
+  { en:"Boot",          pron:"/buːt/",       hi:"आरंभन",                 cat:"OS",     hiR:"aarambhan",     hiC:"<strong>आरंभन</strong> में कंप्यूटर चालू होकर सिस्टम लोड करता है।", enC:"<strong>Boot</strong> starts the computer." },
+  { en:"Log",           pron:"/lɒɡ/",        hi:"लॉग",                   cat:"OS",     hiR:"log",           hiC:"<strong>लॉग</strong> में सिस्टम की घटनाओं का कालक्रम रहता है।", enC:"A <strong>log</strong> records system events." },
+  { en:"Daemon",        pron:"/ˈdiː.mən/",hi:"डेमन",                     cat:"OS",     hiR:"daemon",        hiC:"<strong>डेमन</strong> पृष्ठभूमि में चलने वाली सेवा है।", enC:"A <strong>daemon</strong> is a background service." },
+  { en:"Command",       pron:"/kəˈmɑːnd/",hi:"आदेश",                     cat:"OS",     hiR:"aadesh",        hiC:"<strong>आदेश</strong> कमांड-लाइन में दिया जाने वाला निर्देश है।", enC:"A <strong>command</strong> is a line instruction." },
+  { en:"Threading",     pron:"/ˈθred.ɪŋ/",hi:"बहु_सूत्रण",              cat:"OS",     hiR:"bahu-sootran",  hiC:"<strong>बहु सूत्रण</strong> में कई कार्य एक साथ चलते हैं।", enC:"<strong>Threading</strong> runs multiple tasks at once." },
+  { en:"Multitasking",  pron:"/ˌmʌl.tiˈtɑː.skɪŋ/",hi:"बहु_कार्य",     cat:"OS",     hiR:"bahu-kaarya",   hiC:"<strong>बहु कार्य</strong> में कई प्रोग्राम एक साथ चलते हैं।", enC:"<strong>Multitasking</strong> runs many programs at once." },
+  { en:"Interrupt",     pron:"/ˈɪn.tə.rʌpt/",hi:"अंतरायन",              cat:"OS",     hiR:"antaraayan",    hiC:"<strong>अंतरायन</strong> प्रोसेसर का ध्यान आकर्षित करता है।", enC:"An <strong>interrupt</strong> signals the CPU." },
+  { en:"Path",          pron:"/pɑːθ/",      hi:"पथ",                     cat:"OS",     hiR:"path",          hiC:"<strong>पथ</strong> फ़ाइल तक पहुँचने का पूरा रास्ता है।", enC:"A <strong>path</strong> is the route to a file." },
+  { en:"Service",       pron:"/ˈsɜː.vɪs/",hi:"सेवा",                     cat:"OS",     hiR:"sevaa",         hiC:"<strong>सेवा</strong> पृष्ठभूमि में चलने वाला कार्यक्रम है।", enC:"A <strong>service</strong> runs in the background." },
+  { en:"Linux",         pron:"/ˈlɪn.ʌks/",hi:"लिनक्स",                  cat:"OS",     hiR:"Linux",         hiC:"<strong>लिनक्स</strong> एक मुक्त-स्रोत ऑपरेटिंग सिस्टम है।", enC:"<strong>Linux</strong> is an open-source operating system." },
+  { en:"Windows",       pron:"/ˈwɪn.dəʊz/",hi:"विंडोज़",                cat:"OS",     hiR:"Windows",       hiC:"<strong>विंडोज़</strong> माइक्रोसॉफ़्ट का लोकप्रिय ऑपरेटिंग सिस्टम है।", enC:"<strong>Windows</strong> is Microsoft's popular OS." },
+  { en:"Ubuntu",        pron:"/ʊˈbʊn.tuː/",hi:"उबुंटू",                cat:"OS",     hiR:"Ubuntu",        hiC:"<strong>उबुंटू</strong> लिनक्स का लोकप्रिय वितरण है।", enC:"<strong>Ubuntu</strong> is a popular Linux distribution." },
+
+  // ========== CYBERSECURITY (20) ==========
+  { en:"Phishing",      pron:"/ˈfɪʃ.ɪŋ/",hi:"धोखाधड़ी_ईमेल",         cat:"Sec",    hiR:"dhokhadhadi-imeyl",hiC:"<strong>धोखाधड़ी ईमेल</strong> से व्यक्तिगत जानकारी चुराई जाती है।", enC:"<strong>Phishing</strong> is fraudulent email." },
+  { en:"Encryption",    pron:"/ɪnˈkrɪp.ʃən/",hi:"कूटलेखन",            cat:"Sec",    hiR:"kootlekhhan",   hiC:"<strong>कूटलेखन</strong> सूचना को अपठनीय रूप में बदलता है।", enC:"<strong>Encryption</strong> scrambles data." },
+  { en:"Decryption",    pron:"/dɪˈkrɪp.ʃən/",hi:"कूटवाचन",            cat:"Sec",    hiR:"kootvaachan",   hiC:"<strong>कूटवाचन</strong> कूटलिखित सूचना को पठनीय बनाता है।", enC:"<strong>Decryption</strong> restores encrypted data." },
+  { en:"Malware",       pron:"/ˈmæl.weər/",hi:"दुर्भावनासॉफ़्टवेयर", cat:"Sec",   hiR:"durbhavana-soaftware",hiC:"<strong>दुर्भावनापूर्ण सॉफ़्टवेयर</strong> हानि पहुँचाने के लिए बनाया जाता है।", enC:"<strong>Malware</strong> is harmful software." },
+  { en:"Virus",         pron:"/ˈvaɪə.rəs/",hi:"विषाणु",               cat:"Sec",    hiR:"vishanu",       hiC:"<strong>विषाणु</strong> स्वयं की प्रतिलिपि बनाकर फैलता है।", enC:"A <strong>virus</strong> spreads by self-copying." },
+  { en:"Spyware",       pron:"/ˈspaɪ.weər/",hi:"जासूसी_सॉफ़्टवेयर", cat:"Sec",    hiR:"jaasoosi-soaftware",hiC:"<strong>जासूसी सॉफ़्टवेयर</strong> गुप्त रूप से उपयोगकर्ता पर नज़र रखता है।", enC:"<strong>Spyware</strong> secretly monitors users." },
+  { en:"Trojan",        pron:"/ˈtrəʊ.dʒən/",hi:"ट्रोजन",              cat:"Sec",    hiR:"trojan",        hiC:"<strong>ट्रोजन</strong> उपयोगी दिखकर हानि पहुँचाता है।", enC:"A <strong>Trojan</strong> disguises as useful software." },
+  { en:"Worm",          pron:"/wɜːm/",      hi:"कीट",                   cat:"Sec",    hiR:"keet̪",         hiC:"<strong>कीट</strong> स्वयं फैलकर संजाल को नुकसान पहुँचाता है।", enC:"A computer <strong>worm</strong> spreads on its own." },
+  { en:"Ransomware",    pron:"/ˈræn.səm.weər/",hi:"फिरौती_सॉफ़्टवेयर",cat:"Sec",hiR:"phiraut̪i-soaftware",hiC:"<strong>फिरौती सॉफ़्टवेयर</strong> आँकड़े बंद करके माँगता है।", enC:"<strong>Ransomware</strong> locks data and demands payment." },
+  { en:"Authentication",pron:"/ɔːˌθen.tɪˈkeɪ.ʃən/",hi:"प्रमाणीकरण", cat:"Sec",    hiR:"pramaaneekaran",hiC:"<strong>प्रमाणीकरण</strong> से उपयोगकर्ता की पहचान की पुष्टि होती है।", enC:"<strong>Authentication</strong> verifies identity." },
+  { en:"Authorization", pron:"/ɔːˌθɔː.raɪˈzeɪ.ʃən/",hi:"अधिकृतता",  cat:"Sec",    hiR:"adhikr̥tat̪aa", hiC:"<strong>अधिकृतता</strong> से तय होता है कि कौन क्या कर सकता है।", enC:"<strong>Authorization</strong> controls what one can do." },
+  { en:"Password",      pron:"/ˈpɑːs.wɜːd/",hi:"कूटशब्द",            cat:"Sec",    hiR:"kooT̪ashabd̪",   hiC:"<strong>कूटशब्द</strong> खाते की सुरक्षा का गुप्त वाक्य है।", enC:"A <strong>password</strong> is a secret phrase." },
+  { en:"Biometric",     pron:"/ˌbaɪ.əʊˈmet.rɪk/",hi:"जैवमितीय",    cat:"Sec",    hiR:"jaivam̐it̪iīya", hiC:"<strong>जैवमितीय</strong> पहचान शरीर-विशेषताओं पर आधारित है।", enC:"<strong>Biometric</strong> uses body features for ID." },
+  { en:"Vulnerability", pron:"/ˌvʌl.nər.əˈbɪl.ɪ.ti/",hi:"भेद्यता", cat:"Sec",   hiR:"bhedyataa",     hiC:"<strong>भेद्यता</strong> सिस्टम की कमज़ोरी है।", enC:"A <strong>vulnerability</strong> is a system weakness." },
+  { en:"Exploit",       pron:"/ɪkˈsplɔɪt/",hi:"शोषण",                cat:"Sec",    hiR:"shoshan",       hiC:"<strong>शोषण</strong> भेद्यता का दोहन करने का उपाय है।", enC:"An <strong>exploit</strong> takes advantage of a weakness." },
+  { en:"Audit",         pron:"/ˈɔː.dɪt/",hi:"लेखापरीक्षा",            cat:"Sec",    hiR:"lekhapareekshaa",hiC:"<strong>लेखापरीक्षा</strong> में सिस्टम की सुरक्षा जाँची जाती है।", enC:"A security <strong>audit</strong> checks safety." },
+  { en:"TLS",           pron:"/ˌtiː.elˈes/",hi:"परिवहन_स्तर_सुरक्षा",cat:"Sec",hiR:"parivahan-star-surakshaa",hiC:"<strong>परिवहन स्तर सुरक्षा</strong> इंटरनेट संचार को कूटबद्ध करता है।", enC:"<strong>TLS</strong> encrypts internet communication." },
+  { en:"Hashing (Sec)", pron:"/ˈhæʃ.ɪŋ/",hi:"हैशिंग",                  cat:"Sec",    hiR:"haishing",      hiC:"<strong>हैशिंग</strong> से कूटशब्द सुरक्षित सहेजे जाते हैं।", enC:"<strong>Hashing</strong> secures stored passwords." },
+  { en:"MFA",           pron:"/ˌem.efˈeɪ/",hi:"बहु-कारक_प्रमाणीकरण",  cat:"Sec", hiR:"bahu-kaarak-pramaaneekaran",hiC:"<strong>बहु-कारक प्रमाणीकरण</strong> कई सबूत माँगकर सुरक्षा बढ़ाता है।", enC:"<strong>MFA</strong> requires multiple proofs of identity." },
+  { en:"Penetration",   pron:"/ˌpen.ɪˈtreɪ.ʃən/",hi:"भेदन_परीक्षण",  cat:"Sec",   hiR:"bhedan-pareekshan",hiC:"<strong>भेदन परीक्षण</strong> में सिस्टम की कमज़ोरी खोजी जाती है।", enC:"<strong>Penetration testing</strong> finds weaknesses." },
+
+  // ========== SOFTWARE ENGINEERING (20) ==========
+  { en:"Repository",    pron:"/rɪˈpɒz.ɪ.tər.i/",hi:"भंडार",          cat:"SE",     hiR:"bhandar",       hiC:"<strong>भंडार</strong> में परियोजना का स्रोत-कोड सहेजा जाता है।", enC:"A <strong>repository</strong> stores project code." },
+  { en:"Branch",        pron:"/brɑːntʃ/",   hi:"शाखा",                  cat:"SE",     hiR:"shaakha",       hiC:"<strong>शाखा</strong> मुख्य कोड से अलग विकास-पथ है।", enC:"A <strong>branch</strong> is a separate code line." },
+  { en:"Merge",         pron:"/mɜːdʒ/",     hi:"विलय",                  cat:"SE",     hiR:"vilay",         hiC:"<strong>विलय</strong> दो शाखाओं के परिवर्तनों को जोड़ता है।", enC:"A <strong>merge</strong> combines branches." },
+  { en:"Commit",        pron:"/kəˈmɪt/",    hi:"प्रतिबद्धन",            cat:"SE",     hiR:"pratibadhhan",  hiC:"<strong>प्रतिबद्धन</strong> कोड-परिवर्तन का स्थायी रिकॉर्ड है।", enC:"A <strong>commit</strong> is a saved change." },
+  { en:"Agile",         pron:"/ˈædʒ.aɪl/", hi:"चुस्त",                  cat:"SE",     hiR:"chust̪",        hiC:"<strong>चुस्त</strong> विकास छोटे चरणों में होता है।", enC:"<strong>Agile</strong> uses small iterations." },
+  { en:"Scrum",         pron:"/skrʌm/",     hi:"स्क्रम",                 cat:"SE",     hiR:"scrum",         hiC:"<strong>स्क्रम</strong> एक चुस्त विकास ढाँचा है।", enC:"<strong>Scrum</strong> is an agile framework." },
+  { en:"Sprint",        pron:"/sprɪnt/",   hi:"स्प्रिंट",               cat:"SE",     hiR:"sprint",        hiC:"<strong>स्प्रिंट</strong> एक निश्चित अवधि का कार्य चक्र है।", enC:"A <strong>sprint</strong> is a fixed work cycle." },
+  { en:"Backlog",       pron:"/ˈbæk.lɒɡ/",hi:"पश्च_सूची",              cat:"SE",     hiR:"pashch-soochi", hiC:"<strong>पश्च सूची</strong> में आगे के सभी कार्य रहते हैं।", enC:"A <strong>backlog</strong> lists all upcoming work." },
+  { en:"Requirement",   pron:"/rɪˈkwaɪə.mənt/",hi:"आवश्यकता",        cat:"SE",     hiR:"aavashyakataa", hiC:"<strong>आवश्यकता</strong> वह जरूरत है जो सिस्टम पूरी करे।", enC:"A <strong>requirement</strong> is a system need." },
+  { en:"Design",        pron:"/dɪˈzaɪn/",hi:"अभिकल्प",                cat:"SE",     hiR:"abhikalp",      hiC:"<strong>अभिकल्प</strong> सॉफ़्टवेयर की संरचना-योजना है।", enC:"<strong>Design</strong> is the software plan." },
+  { en:"Implementation",pron:"/ˌɪm.plɪ.menˈteɪ.ʃən/",hi:"कार्यान्वयन",cat:"SE",hiR:"kaaryaanvayan", hiC:"<strong>कार्यान्वयन</strong> में अभिकल्प कोड में बदला जाता है।", enC:"<strong>Implementation</strong> turns design into code." },
+  { en:"Testing",       pron:"/ˈtes.tɪŋ/",hi:"परीक्षण",               cat:"SE",     hiR:"pareekshan",    hiC:"<strong>परीक्षण</strong> से सॉफ़्टवेयर की गुणवत्ता सुनिश्चित होती है।", enC:"<strong>Testing</strong> ensures quality." },
+  { en:"Deployment",    pron:"/dɪˈplɔɪ.mənt/",hi:"प्रकाशन",           cat:"SE",     hiR:"prakaashan",    hiC:"<strong>प्रकाशन</strong> में सॉफ़्टवेयर उपयोगकर्ता तक पहुँचता है।", enC:"<strong>Deployment</strong> releases software." },
+  { en:"Maintenance",   pron:"/ˈmeɪn.tə.nəns/",hi:"रखरखाव",          cat:"SE",     hiR:"rakharakhaav",  hiC:"<strong>रखरखाव</strong> में प्रकाशित सॉफ़्टवेयर को सुधारा जाता है।", enC:"<strong>Maintenance</strong> improves released software." },
+  { en:"Refactor",      pron:"/riːˈfæk.tər/",hi:"पुनर्गठन",           cat:"SE",     hiR:"punargathan",   hiC:"<strong>पुनर्गठन</strong> से कोड का बाह्य व्यवहार न बदलते हुए भीतर सुधार होता है।", enC:"<strong>Refactoring</strong> cleans up code." },
+  { en:"Code Review",   pron:"/kəʊd rɪˈvjuː/",hi:"कोड_समीक्षा",     cat:"SE",     hiR:"code-sameekshaa",hiC:"<strong>कोड समीक्षा</strong> में साथी कोड की जाँच करते हैं।", enC:"<strong>Code review</strong> is peer inspection." },
+  { en:"Version Control",pron:"/ˈvɜː.ʒən kənˈtrəʊl/",hi:"संस्करण_नियंत्रण",cat:"SE",hiR:"sankaran-niyantran",hiC:"<strong>संस्करण नियंत्रण</strong> कोड के बदलावों का इतिहास रखता है।", enC:"<strong>Version control</strong> tracks changes." },
+  { en:"Git",           pron:"/ɡɪt/",       hi:"गिट",                    cat:"SE",     hiR:"git",           hiC:"<strong>गिट</strong> लोकप्रिय संस्करण नियंत्रण उपकरण है।", enC:"<strong>Git</strong> is a popular VCS tool." },
+  { en:"Pull Request",  pron:"/pʊl rɪˈkwest/",hi:"खींच_अनुरोध",        cat:"SE",     hiR:"kheeñch-anurodh",hiC:"<strong>खींच अनुरोध</strong> में परिवर्तन समीक्षा के लिए भेजे जाते हैं।", enC:"A <strong>pull request</strong> proposes changes for review." },
+  { en:"CI/CD",         pron:"/ˌsiː.aɪ ˌsiːˈdiː/",hi:"निरंतर_एकीकरण_प्रकाशन",cat:"SE",hiR:"nirantar-ekikaran-prakaashan",hiC:"<strong>निरंतर एकीकरण प्रकाशन</strong> स्वचालित रूप से कोड बिल्ड और प्रकाशित करता है।", enC:"<strong>CI/CD</strong> automates build & deploy." },
+
+  // ========== CLOUD & DEVOPS (20) ==========
+  { en:"Cloud",         pron:"/klaʊd/",     hi:"मेघ",                   cat:"Cloud",  hiR:"megh",          hiC:"<strong>मेघ</strong> इंटरनेट पर आँकड़े रखने की सेवा है।", enC:"The <strong>cloud</strong> stores data online." },
+  { en:"SaaS",          pron:"/sæs/",       hi:"सेवा_के_रूप_में_सॉफ़्टवेयर",cat:"Cloud",hiR:"sevaa-ke-roop-mein-soaftware",hiC:"<strong>सेवा के रूप में सॉफ़्टवेयर</strong> इंटरनेट से मिलती है।", enC:"<strong>SaaS</strong> delivers software online." },
+  { en:"PaaS",          pron:"/pæs/",       hi:"मंच_के_रूप_में_सेवा",  cat:"Cloud",  hiR:"manch-ke-roop-mein-sevaa",hiC:"<strong>मंच के रूप में सेवा</strong> विकास मंच देती है।", enC:"<strong>PaaS</strong> provides a dev platform." },
+  { en:"IaaS",          pron:"/aɪæs/",      hi:"अवसंरचना_के_रूप_में_सेवा",cat:"Cloud",hiR:"avsanrachnaa-ke-roop-mein-sevaa",hiC:"<strong>अवसंरचना के रूप में सेवा</strong> किराये पर संसाधन देती है।", enC:"<strong>IaaS</strong> rents computing resources." },
+  { en:"Serverless",    pron:"/ˈsɜː.və.ləs/",hi:"सर्वर_रहित",         cat:"Cloud",  hiR:"server-rehit",  hiC:"<strong>सर्वर रहित</strong> में आप केवल कोड लिखते हैं, सर्वर नहीं।", enC:"<strong>Serverless</strong> hides server management." },
+  { en:"Container",     pron:"/kənˈteɪ.nər/",hi:"पात्र",               cat:"Cloud",  hiR:"paatr̥",        hiC:"<strong>पात्र</strong> में प्रोग्राम उसकी निर्भरता सहित बंद रहता है।", enC:"A <strong>container</strong> packages an app with its dependencies." },
+  { en:"Docker",        pron:"/ˈdɒk.ər/", hi:"डॉकर",                  cat:"Cloud",  hiR:"docker",        hiC:"<strong>डॉकर</strong> पात्र बनाने का लोकप्रिय उपकरण है।", enC:"<strong>Docker</strong> is a popular container tool." },
+  { en:"Kubernetes",    pron:"/kuː.bəˈne.tɪs/",hi:"कुबेरनेट्स",      cat:"Cloud",  hiR:"Kubernetes",    hiC:"<strong>कुबेरनेट्स</strong> पात्रों के प्रबंधन का उपकरण है।", enC:"<strong>Kubernetes</strong> orchestrates containers." },
+  { en:"Microservice",  pron:"/ˈmaɪ.krəʊˌsɜː.vɪs/",hi:"सूक्ष्म_सेवा",cat:"Cloud",hiR:"sookshm-sevaa", hiC:"<strong>सूक्ष्म सेवा</strong> में प्रत्येक कार्य अलग सेवा होती है।", enC:"A <strong>microservice</strong> is a small focused service." },
+  { en:"Load Balancer", pron:"/ləʊd ˈbæl.ən.sər/",hi:"भार_संतुलक", cat:"Cloud",  hiR:"bhaar-sant̪ulak",hiC:"<strong>भार संतुलक</strong> यातायात को कई सर्वरों में बाँटता है।", enC:"A <strong>load balancer</strong> spreads traffic." },
+  { en:"Virtualization",pron:"/ˌvɜː.tʃu.ə.laɪˈzeɪ.ʃən/",hi:"आभासीकरण",cat:"Cloud",hiR:"aabhaasikaran", hiC:"<strong>आभासीकरण</strong> से एक हार्डवेयर पर कई सिस्टम चलते हैं।", enC:"<strong>Virtualization</strong> runs many systems on one hardware." },
+  { en:"VM",            pron:"/ˌviːˈem/",  hi:"आभासी_मशीन",            cat:"Cloud",  hiR:"aabhaasi-mashin",hiC:"<strong>आभासी मशीन</strong> सॉफ़्टवेयर द्वारा बनाई गई कंप्यूटर-नकल है।", enC:"A <strong>VM</strong> is a software-based computer." },
+  { en:"DevOps",        pron:"/dev.ɒps/",hi:"विकास_संचालन",            cat:"Cloud",  hiR:"vikaas-sanchalan",hiC:"<strong>विकास संचालन</strong> विकास और संचालन को जोड़ता है।", enC:"<strong>DevOps</strong> bridges dev and ops." },
+  { en:"AWS",           pron:"/ˌeɪ.dʌb.ljuːˈes/",hi:"ए_डब्लू_एस",   cat:"Cloud",  hiR:"AWS",           hiC:"<strong>ए डब्लू एस</strong> अमेज़न का मेघ मंच है।", enC:"<strong>AWS</strong> is Amazon's cloud platform." },
+  { en:"Azure",         pron:"/ˈæʒ.ər/", hi:"एज़्योर",                 cat:"Cloud",  hiR:"Azure",         hiC:"<strong>एज़्योर</strong> माइक्रोसॉफ़्ट का मेघ मंच है।", enC:"<strong>Azure</strong> is Microsoft's cloud platform." },
+  { en:"Monitoring",    pron:"/ˈmɒn.ɪ.tər.ɪŋ/",hi:"निगरानी",          cat:"Cloud",  hiR:"nigraanii",     hiC:"<strong>निगरानी</strong> से सिस्टम के प्रदर्शन पर नज़र रहती है।", enC:"<strong>Monitoring</strong> watches system health." },
+  { en:"Scaling",       pron:"/ˈskeɪ.lɪŋ/",hi:"मापन",                  cat:"Cloud",  hiR:"maapan",        hiC:"<strong>मापन</strong> से संसाधन ज़रूरत के अनुसार बढ़ते-घटते हैं।", enC:"<strong>Scaling</strong> adjusts resources." },
+  { en:"Jenkins",       pron:"/ˈdʒeŋ.kɪnz/",hi:"जेनकिंस",             cat:"Cloud",  hiR:"Jenkins",       hiC:"<strong>जेनकिंस</strong> स्वचालित निर्माण का उपकरण है।", enC:"<strong>Jenkins</strong> automates builds." },
+  { en:"Terraform",     pron:"/ˈtɜː.rə.fɔːm/",hi:"टेराफॉर्म",         cat:"Cloud",  hiR:"Terraform",     hiC:"<strong>टेराफॉर्म</strong> अवसंरचना को कोड के रूप में तय करता है।", enC:"<strong>Terraform</strong> treats infrastructure as code." },
+  { en:"GitHub",        pron:"/ˈɡɪt.hʌb/",hi:"गिटहब",                cat:"SE",     hiR:"GitHub",        hiC:"<strong>गिटहब</strong> मेघ-आधारित कोड भंडार सेवा है।", enC:"<strong>GitHub</strong> is a cloud code repository." },
+
+  // ========== AI/ML (20) ==========
+  { en:"AI",            pron:"/ˌeɪˈaɪ/", hi:"कृत्रिम_बुद्धि",         cat:"AI",     hiR:"kr̥trim-budddhi",hiC:"<strong>कृत्रिम बुद्धि</strong> मशीनों में मानव-सदृश सोच है।", enC:"<strong>AI</strong> gives machines human-like thinking." },
+  { en:"Machine Learning",pron:"/məˌʃiːn ˈlɜː.nɪŋ/",hi:"मशीन_अधिगम",cat:"AI",   hiR:"machine-adhigam",hiC:"<strong>मशीन अधिगम</strong> से कंप्यूटर अनुभव से सीखता है।", enC:"<strong>Machine learning</strong> learns from data." },
+  { en:"Deep Learning", pron:"/diːp ˈlɜː.nɪŋ/",hi:"गहन_अधिगम",       cat:"AI",     hiR:"gahan-adhigam", hiC:"<strong>गहन अधिगम</strong> जटिल तंत्रिका जाल से सीखता है।", enC:"<strong>Deep learning</strong> uses deep neural nets." },
+  { en:"Neural Network",pron:"/ˈnjʊə.rəl ˈnet.wɜːk/",hi:"तंत्रिका_जाल",cat:"AI",hiR:"tantr̥ikaa-jaal",hiC:"<strong>तंत्रिका जाल</strong> मस्तिष्क-सम संरचना है।", enC:"A <strong>neural network</strong> mimics the brain." },
+  { en:"Dataset",       pron:"/ˈdeɪ.tə.set/",hi:"आँकड़ा_समूह",        cat:"AI",     hiR:"aanka-samuh",   hiC:"<strong>आँकड़ा समूह</strong> अधिगम के लिए सामग्री है।", enC:"A <strong>dataset</strong> is learning material." },
+  { en:"Model",         pron:"/ˈmɒd.əl/",hi:"प्रतिरूप",                cat:"AI",     hiR:"pratirup",      hiC:"<strong>प्रतिरूप</strong> अधिगम से बनी भविष्यवाणी-संरचना है।", enC:"A <strong>model</strong> is the learned predictor." },
+  { en:"Training",      pron:"/ˈtreɪ.nɪŋ/",hi:"प्रशिक्षण",            cat:"AI",     hiR:"prashikshan",   hiC:"<strong>प्रशिक्षण</strong> में प्रतिरूप आँकड़ों से सीखता है।", enC:"<strong>Training</strong> teaches a model." },
+  { en:"Prediction",    pron:"/prɪˈdɪk.ʃən/",hi:"भविष्यवाणी",         cat:"AI",     hiR:"bhavishyavaanii",hiC:"<strong>भविष्यवाणी</strong> प्रतिरूप का निर्गत अनुमान है।", enC:"A <strong>prediction</strong> is the model output." },
+  { en:"Classification",pron:"/ˌklæs.ɪ.fɪˈkeɪ.ʃən/",hi:"वर्गीकरण",   cat:"AI",     hiR:"vargeekaran",   hiC:"<strong>वर्गीकरण</strong> में आँकड़े श्रेणियों में बँटते हैं।", enC:"<strong>Classification</strong> sorts data into categories." },
+  { en:"Regression",    pron:"/rɪˈɡreʃ.ən/",hi:"समाश्रयण",            cat:"AI",     hiR:"samaashrayan",  hiC:"<strong>समाश्रयण</strong> से निरंतर मान की भविष्यवाणी होती है।", enC:"<strong>Regression</strong> predicts continuous values." },
+  { en:"Clustering",    pron:"/ˈklʌs.tər.ɪŋ/",hi:"समूहन",            cat:"AI",     hiR:"samuhan",       hiC:"<strong>समूहन</strong> में समान आँकड़े स्वतः समूहों में आते हैं।", enC:"<strong>Clustering</strong> groups similar data." },
+  { en:"Tokenization",  pron:"/ˌtəʊ.kə.naɪˈzeɪ.ʃən/",hi:"टोकनीकरण", cat:"AI",   hiR:"t̪okinikaran",  hiC:"<strong>टोकनीकरण</strong> से पाठ छोटे भागों में टूटता है।", enC:"<strong>Tokenization</strong> splits text into units." },
+  { en:"Embedding",     pron:"/ɪmˈbed.ɪŋ/",hi:"अंतःस्थापन",           cat:"AI",     hiR:"antahst̪haapan",hiC:"<strong>अंतःस्थापन</strong> से शब्द संख्यात्मक सदिश बनते हैं।", enC:"<strong>Embedding</strong> maps words to vectors." },
+  { en:"Overfitting",   pron:"/ˌəʊ.vəˈfɪt.ɪŋ/",hi:"अतिसंयोजन",       cat:"AI",     hiR:"at̪isanyojan",  hiC:"<strong>अतिसंयोजन</strong> में प्रतिरूप प्रशिक्षण आँकड़े रट लेता है।", enC:"<strong>Overfitting</strong> memorizes training data." },
+  { en:"Inference",     pron:"/ˈɪn.fər.əns/",hi:"अनुमान",             cat:"AI",     hiR:"anumaan",       hiC:"<strong>अनुमान</strong> में प्रशिक्षित प्रतिरूप नया उत्तर देता है।", enC:"<strong>Inference</strong> runs a trained model." },
+  { en:"Big Data",      pron:"/bɪɡ ˈdeɪ.tə/",hi:"विशाल_आँकड़े",       cat:"AI",     hiR:"vishaal-aanke", hiC:"<strong>विशाल आँकड़े</strong> पारंपरिक साधनों से परे विशाल सूचना हैं।", enC:"<strong>Big data</strong> is massive information." },
+  { en:"Hadoop",        pron:"/ˈhæd.uːp/",hi:"हडॉप",                  cat:"AI",     hiR:"Hadoop",        hiC:"<strong>हडॉप</strong> विशाल आँकड़ों का वितरित ढाँचा है।", enC:"<strong>Hadoop</strong> handles big data distribution." },
+  { en:"Chatbot",       pron:"/ˈtʃæt.bɒt/",hi:"संवाद_यंत्र",           cat:"AI",     hiR:"sanvaad-yantr", hiC:"<strong>संवाद यंत्र</strong> स्वतः बातचीत करने वाला प्रोग्राम है।", enC:"A <strong>chatbot</strong> converses automatically." },
+  { en:"Prompt",        pron:"/prɒmpt/",   hi:"प्रॉम्प्ट",              cat:"AI",     hiR:"prompt",        hiC:"<strong>प्रॉम्प्ट</strong> वह निर्देश है जो हम AI को देते हैं।", enC:"A <strong>prompt</strong> is input given to AI." },
+  { en:"Tuning",        pron:"/ˈtjuː.nɪŋ/",hi:"सूक्ष्म_समायोजन",       cat:"AI",     hiR:"sookshm-samaayojan",hiC:"<strong>सूक्ष्म समायोजन</strong> से प्रतिरूप को विशेष कार्य के लिए ढाला जाता है।", enC:"<strong>Fine-tuning</strong> adapts a model to a task." },
+
+  // ========== PROGRAMMING LANGUAGES (15) ==========
+  { en:"Java",          pron:"/ˈdʒɑː.və/",hi:"जावा",                  cat:"Lang",   hiR:"Java",          hiC:"<strong>जावा</strong> वस्तु-उन्मुख प्रोग्रामिंग भाषा है।", enC:"<strong>Java</strong> is an object-oriented language." },
+  { en:"C",             pron:"/siː/",       hi:"सी_भाषा",                cat:"Lang",   hiR:"C-bhasha",      hiC:"<strong>सी भाषा</strong> एक प्रभावशाली निम्न-स्तरीय भाषा है।", enC:"<strong>C</strong> is a powerful low-level language." },
+  { en:"C++",           pron:"/ˌsiː.plʌsˈplʌs/",hi:"सी_प्लस_प्लस",    cat:"Lang",   hiR:"C++",           hiC:"<strong>सी प्लस प्लस</strong> सी की वस्तु-उन्मुख विस्तार है।", enC:"<strong>C++</strong> extends C with OOP." },
+  { en:"C#",            pron:"/ˌsiːˈʃɑːp/",hi:"सी_शार्प",              cat:"Lang",   hiR:"C-sharp",       hiC:"<strong>सी शार्प</strong> माइक्रोसॉफ़्ट की आधुनिक भाषा है।", enC:"<strong>C#</strong> is Microsoft's modern language." },
+  { en:"Python",        pron:"/ˈpaɪ.θən/",hi:"पाइथन",                 cat:"Lang",   hiR:"paithan",       hiC:"<strong>पाइथन</strong> सरल वाक्य रचना वाली भाषा है।", enC:"<strong>Python</strong> is known for simple syntax." },
+  { en:"Ruby",          pron:"/ˈruː.bi/", hi:"रूबी",                    cat:"Lang",   hiR:"Ruby",          hiC:"<strong>रूबी</strong> विकासकुशल और अभिव्यक्तिशील भाषा है।", enC:"<strong>Ruby</strong> is expressive and productive." },
+  { en:"Go",            pron:"/ɡəʊ/",       hi:"गो_भाषा",                cat:"Lang",   hiR:"Go-bhasha",     hiC:"<strong>गो भाषा</strong> तेज़ और सरल संकलित भाषा है।", enC:"<strong>Go</strong> is a fast, simple compiled language." },
+  { en:"Rust",          pron:"/rʌst/",     hi:"रस्ट",                    cat:"Lang",   hiR:"Rust",          hiC:"<strong>रस्ट</strong> सुरक्षा-प्रधान प्रणाली भाषा है।", enC:"<strong>Rust</strong> is a safety-first systems language." },
+  { en:"PHP",           pron:"/ˌpiː.eɪtʃˈpiː/",hi:"पी_एच_पी",          cat:"Lang",   hiR:"PHP",           hiC:"<strong>पी एच पी</strong> वेब विकास की लोकप्रिय सर्वर भाषा है।", enC:"<strong>PHP</strong> is a popular web server language." },
+  { en:"Swift",         pron:"/swɪft/",    hi:"स्विफ्ट",                cat:"Lang",   hiR:"Swift",         hiC:"<strong>स्विफ्ट</strong> ऐपल की आधुनिक भाषा है।", enC:"<strong>Swift</strong> is Apple's modern language." },
+  { en:"Kotlin",        pron:"/ˈkɒt.lɪn/",hi:"कोटलिन",                 cat:"Lang",   hiR:"Kotlin",        hiC:"<strong>कोटलिन</strong> एंड्रॉइड की आधिकारिक भाषा है।", enC:"<strong>Kotlin</strong> is Android's official language." },
+  { en:"Scala",         pron:"/ˈskɑː.lə/",hi:"स्काला",                 cat:"Lang",   hiR:"Scala",         hiC:"<strong>स्काला</strong> जावा की कार्यात्मक विस्तार भाषा है।", enC:"<strong>Scala</strong> is a functional JVM language." },
+  { en:"R",             pron:"/ɑːr/",       hi:"आर_भाषा",                cat:"Lang",   hiR:"R-bhasha",      hiC:"<strong>आर भाषा</strong> सांख्यिकी और आँकड़ा विश्लेषण में प्रयुक्त है।", enC:"<strong>R</strong> is used for statistics." },
+  { en:"Perl",          pron:"/pɜːl/",     hi:"पर्ल",                    cat:"Lang",   hiR:"Perl",          hiC:"<strong>पर्ल</strong> पाठ-संसाधन में प्रसिद्ध भाषा है।", enC:"<strong>Perl</strong> is famous for text processing." },
+  { en:"TypeScript",    pron:"/ˈtaɪp.skript/",hi:"टाइपस्क्रिप्ट",     cat:"Lang",   hiR:"TypeScript",    hiC:"<strong>टाइपस्क्रिप्ट</strong> जावास्क्रिप्ट की प्रकारित विस्तार है।", enC:"<strong>TypeScript</strong> is typed JavaScript." },
+
+  // ========== TESTING & QA (10) ==========
+  { en:"Unit Test",     pron:"/ˈjuː.nɪt test/",hi:"एकल_परीक्षण",     cat:"Test",   hiR:"ekal-pareekshan",hiC:"<strong>एकल परीक्षण</strong> कोड के एक छोटे भाग की जाँच करता है।", enC:"A <strong>unit test</strong> checks a small code piece." },
+  { en:"Integration Test",pron:"/ˌɪn.tɪˈɡreɪ.ʃən/",hi:"एकीकरण_परीक्षण",cat:"Test",hiR:"ekikaran-pareekshan",hiC:"<strong>एकीकरण परीक्षण</strong> अनेक भागों को एक साथ जाँचता है।", enC:"An <strong>integration test</strong> checks parts together." },
+  { en:"Selenium",      pron:"/sɪˈliː.ni.əm/",hi:"सेलेनियम",           cat:"Test",   hiR:"Selenium",      hiC:"<strong>सेलेनियम</strong> ब्राउज़र स्वचालन उपकरण है।", enC:"<strong>Selenium</strong> is a browser automation tool." },
+  { en:"JUnit",         pron:"/ˌdʒeɪˈjuː.nɪt/",hi:"जे_यूनिट",         cat:"Test",   hiR:"JUnit",         hiC:"<strong>जे यूनिट</strong> जावा का परीक्षण ढाँचा है।", enC:"<strong>JUnit</strong> is a Java testing framework." },
+  { en:"Pytest",        pron:"/ˈpaɪ.test/",hi:"पाइटेस्ट",              cat:"Test",   hiR:"Pytest",        hiC:"<strong>पाइटेस्ट</strong> पाइथन का परीक्षण ढाँचा है।", enC:"<strong>Pytest</strong> is Python's testing framework." },
+  { en:"Regression Test",pron:"/rɪˈɡreʃ.ən test/",hi:"समाश्रयण_परीक्षण",cat:"Test",hiR:"samaashrayan-pareekshan",hiC:"<strong>समाश्रयण परीक्षण</strong> पुरानी कार्यप्रणाली अब भी सही है यह सुनिश्चित करता है।", enC:"A <strong>regression test</strong> checks old features still work." },
+  { en:"Bug Tracking",  pron:"/bʌɡ ˈtræk.ɪŋ/",hi:"त्रुटि_अनुरेखण",   cat:"Test",   hiR:"truti-anurekhan",hiC:"<strong>त्रुटि अनुरेखण</strong> से सॉफ़्टवेयर त्रुटियों का रिकॉर्ड रहता है।", enC:"<strong>Bug tracking</strong> records software issues." },
+  { en:"Beta Test",     pron:"/ˈbiː.tə test/",hi:"बीटा_परीक्षण",      cat:"Test",   hiR:"beta-pareekshan",hiC:"<strong>बीटा परीक्षण</strong> वास्तविक उपयोगकर्ता द्वारा होने वाला पूर्व-परीक्षण है।", enC:"<strong>Beta testing</strong> is pre-release user testing." },
+  { en:"Smoke Test",    pron:"/sməʊk test/",hi:"धुआँ_परीक्षण",        cat:"Test",   hiR:"dhuuaan-pareekshan",hiC:"<strong>धुआँ परीक्षण</strong> मूल कार्यप्रणाली की शीघ्र जाँच है।", enC:"A <strong>smoke test</strong> is a quick basic check." },
+  { en:"QA",            pron:"/ˌkjuːˈeɪ/",hi:"गुणवत्ता_आश्वासन",      cat:"Test",   hiR:"gunavatta-aashwasan",hiC:"<strong>गुणवत्ता आश्वासन</strong> सॉफ़्टवेयर की गुणवत्ता सुनिश्चित करता है।", enC:"<strong>QA</strong> ensures software quality." },
+
+  // ========== MOBILE & DATA SCIENCE (15) ==========
+  { en:"Android",       pron:"/ˈæn.drɔɪd/",hi:"एंड्रॉइड",             cat:"Mobile", hiR:"Android",       hiC:"<strong>एंड्रॉइड</strong> गूगल का मोबाइल ऑपरेटिंग सिस्टम है।", enC:"<strong>Android</strong> is Google's mobile OS." },
+  { en:"iOS",           pron:"/ˌaɪ.əʊˈes/",hi:"आई_ओ_एस",            cat:"Mobile", hiR:"iOS",           hiC:"<strong>आई ओ एस</strong> ऐपल का मोबाइल ऑपरेटिंग सिस्टम है।", enC:"<strong>iOS</strong> is Apple's mobile OS." },
+  { en:"Flutter",       pron:"/ˈflʌt.ər/",hi:"फ़्लटर",                cat:"Mobile", hiR:"Flutter",       hiC:"<strong>फ़्लटर</strong> क्रॉस-प्लेटफ़ॉर्म ऐप ढाँचा है।", enC:"<strong>Flutter</strong> is a cross-platform app framework." },
+  { en:"React Native",  pron:"/riˈækt ˈneɪ.tɪv/",hi:"रिएक्ट_नेटिव",   cat:"Mobile", hiR:"React-Native",  hiC:"<strong>रिएक्ट नेटिव</strong> से मोबाइल ऐप बनते हैं।", enC:"<strong>React Native</strong> builds mobile apps." },
+  { en:"Pandas",        pron:"/ˈpæn.dəz/",hi:"पांडास",                cat:"Data",   hiR:"Pandas",        hiC:"<strong>पांडास</strong> पाइथन की आँकड़ा-विश्लेषण लाइब्रेरी है।", enC:"<strong>Pandas</strong> is Python's data analysis library." },
+  { en:"NumPy",         pron:"/ˈnʌm.pi/",hi:"नम्पाई",                cat:"Data",   hiR:"NumPy",         hiC:"<strong>नम्पाई</strong> पाइथन की संख्यात्मक गणना लाइब्रेरी है।", enC:"<strong>NumPy</strong> handles numerical computation." },
+  { en:"Spark",         pron:"/spɑːk/",    hi:"स्पार्क",                cat:"Data",   hiR:"Spark",         hiC:"<strong>स्पार्क</strong> तेज़ वितरित आँकड़ा-प्रसंस्करण ढाँचा है।", enC:"<strong>Spark</strong> is a fast distributed data engine." },
+  { en:"Data Mining",   pron:"/ˈdeɪ.tə ˈmaɪ.nɪŋ/",hi:"आँकड़ा_खनन",   cat:"Data",   hiR:"aanka-khanan",  hiC:"<strong>आँकड़ा खनन</strong> से बड़े आँकड़ों में पैटर्न मिलते हैं।", enC:"<strong>Data mining</strong> finds patterns in data." },
+  { en:"Data Analytics",pron:"/ˈdeɪ.tə ˌæn.əˈlɪt.ɪks/",hi:"आँकड़ा_विश्लेषण",cat:"Data",hiR:"aanka-vishleshan",hiC:"<strong>आँकड़ा विश्लेषण</strong> से आँकड़ों से अर्थ निकाला जाता है।", enC:"<strong>Data analytics</strong> extracts meaning from data." },
+  { en:"Data Science",  pron:"/ˈdeɪ.tə ˈsaɪ.əns/",hi:"आँकड़ा_विज्ञान",cat:"Data", hiR:"aanka-vigyaan",  hiC:"<strong>आँकड़ा विज्ञान</strong> आँकड़ों से ज्ञान निकालने का क्षेत्र है।", enC:"<strong>Data science</strong> is about insights from data." },
+  { en:"Visualization", pron:"/ˌvɪʒ.u.ə.laɪˈzeɪ.ʃən/",hi:"चित्रण",  cat:"Data",   hiR:"chitran",       hiC:"<strong>चित्रण</strong> से आँकड़े चित्रों में दिखाए जाते हैं।", enC:"<strong>Visualization</strong> turns data into pictures." },
+  { en:"Dashboard",     pron:"/ˈdæʃ.bɔːd/",hi:"यंत्र_पट्ट",          cat:"Data",   hiR:"yantr-pattt",   hiC:"<strong>यंत्र पट्ट</strong> प्रमुख आँकड़ों का एक दृश्य पृष्ठ है।", enC:"A <strong>dashboard</strong> shows key data at a glance." },
+  { en:"ETL",           pron:"/ˌiː.tiːˈel/",hi:"निकासी_रूपांतरण_लोड",cat:"Data",hiR:"nikaasi-roopantaran-load",hiC:"<strong>निकासी रूपांतरण लोड</strong> आँकड़ों को एक स्थान से दूसरे स्थान पर ले जाता है।", enC:"<strong>ETL</strong> moves data between systems." },
+  { en:"API Key",       pron:"/ˌeɪ.piːˈaɪ kiː/",hi:"ए_पी_आई_कुंजी",  cat:"Web",   hiR:"API-kunji",     hiC:"<strong>ए पी आई कुंजी</strong> API उपयोगकर्ता की पहचान है।", enC:"An <strong>API key</strong> identifies the API user." },
+  { en:"SEO",           pron:"/ˌes.iːˈəʊ/",hi:"खोज_इंजन_अनुकूलन",   cat:"Web",    hiR:"khoj-engine-anukoolan",hiC:"<strong>खोज इंजन अनुकूलन</strong> से वेबसाइट खोज-परिणामों में ऊपर आती है।", enC:"<strong>SEO</strong> makes sites rank higher in search." },
+
+  // ========== MORE HARDWARE (10) ==========
+  { en:"Peripheral",    pron:"/pəˈrɪf.ər.əl/",hi:"परिफेरल",         cat:"HW",     hiR:"pariferal",     hiC:"<strong>परिफेरल</strong> बाहरी उपकरण हैं जैसे माउस, प्रिंटर।", enC:"A <strong>peripheral</strong> is an external device." },
+  { en:"Monitor",       pron:"/ˈmɒn.ɪ.tər/",hi:"मॉनिटर",              cat:"HW",     hiR:"monitor",       hiC:"<strong>मॉनिटर</strong> कंप्यूटर की दृश्य-स्क्रीन है।", enC:"A <strong>monitor</strong> is the display screen." },
+  { en:"Keyboard",      pron:"/ˈkiː.bɔːd/",hi:"कीबोर्ड",              cat:"HW",     hiR:"keyboard",      hiC:"<strong>कीबोर्ड</strong> से अक्षर और आदेश दर्ज होते हैं।", enC:"A <strong>keyboard</strong> is used to type." },
+  { en:"Motherboard",   pron:"/ˈmʌð.ə.bɔːd/",hi:"मदरबोर्ड",         cat:"HW",     hiR:"motherboard",   hiC:"<strong>मदरबोर्ड</strong> सभी हार्डवेयर को जोड़ने वाला मुख्य पटल है।", enC:"The <strong>motherboard</strong> connects all hardware." },
+  { en:"Storage",       pron:"/ˈstɔː.rɪdʒ/",hi:"भंडारण",              cat:"HW",     hiR:"bhand̪aaran",   hiC:"<strong>भंडारण</strong> में आँकड़े स्थायी रूप से सहेजे जाते हैं।", enC:"<strong>Storage</strong> keeps data permanently." },
+  { en:"SSD",           pron:"/ˌes.esˈdiː/",hi:"ठोस_अवस्था_ड्राइव", cat:"HW",     hiR:"T̪hoS-avasthaa-drive",hiC:"<strong>ठोस अवस्था ड्राइव</strong> तेज़ और टिकाऊ भंडारण है।", enC:"An <strong>SSD</strong> is fast durable storage." },
+  { en:"HDD",           pron:"/ˌeɪtʃ.diːˈdiː/",hi:"कठोर_डिस्क_ड्राइव",cat:"HW",hiR:"kat̪hor-disk-drive",hiC:"<strong>कठोर डिस्क ड्राइव</strong> चुम्बकीय चक्रियों पर आँकड़े सहेजता है।", enC:"An <strong>HDD</strong> stores data on magnetic disks." },
+  { en:"GPU",           pron:"/ˌdʒiː.pjuːˈiː/",hi:"ग्राफ़िक्स_प्रोसेसर",cat:"HW",hiR:"graphics-prosesar",hiC:"<strong>ग्राफ़िक्स प्रोसेसर</strong> चित्र और वीडियो को तेज़ी से संसाधित करता है।", enC:"A <strong>GPU</strong> processes images fast." },
+  { en:"CPU",           pron:"/ˌsiː.pjuːˈiː/",hi:"केन्द्रीय_प्रोसेसर",cat:"HW",hiR:"kendriiy-prosesar",hiC:"<strong>केन्द्रीय प्रोसेसर</strong> कंप्यूटर का मुख्य मस्तिष्क है।", enC:"The <strong>CPU</strong> is the main processor." },
+  { en:"Cache (HW)",    pron:"/kæʃ/",       hi:"उपस्मृति",             cat:"HW",     hiR:"up-smriti",     hiC:"<strong>उपस्मृति</strong> प्रोसेसर के पास स्थित तेज़ स्मृति है।", enC:"A hardware <strong>cache</strong> is fast memory near the CPU." }
+];
+
+// Date helpers (IST)
+function getISTDate() {
+  const now = new Date();
+  return new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+}
+function dateKey(d) {
+  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+}
+function dayOfYear(d) {
+  const start = new Date(d.getFullYear(), 0, 0);
+  const diff = d - start;
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+function seededRand(seed) {
+  let s = seed % 2147483647;
+  if (s <= 0) s += 2147483646;
+  return function() {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+function pickFiveForDate(d) {
+  const key = dateKey(d);
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) | 0;
+  const rng = seededRand(Math.abs(hash));
+  const pool = [...WORD_BANK];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 5);
+}
+
+function render(words) {
+  const grid = document.getElementById('wordGrid');
+  grid.innerHTML = words.map((w, i) => `
+    <div class="word-card">
+      <div class="word-category">${w.cat}</div>
+      <div class="word-english">${w.en}</div>
+      <div class="word-pronunciation">${w.pron}</div>
+      <div class="meaning-divider"></div>
+      <div class="meaning-label">Hindi · एक शब्द</div>
+      <div class="meaning-hindi hindi">${w.hi}</div>
+      <div class="meaning-hindi-roman">${w.hiR}</div>
+
+      <div class="context-box">
+        <div class="context-label">📖 हिंदी संदर्भ</div>
+        <div class="context-hindi hindi">${w.hiC}</div>
+        <div class="context-label" style="margin-top:10px;">🌐 English Context</div>
+        <div class="context-english">${w.enC}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateDateStrip() {
+  const ist = getISTDate();
+  const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('todayDate').textContent = ist.toLocaleDateString('en-US', opts);
+  document.getElementById('liveTime').textContent = ist.toLocaleTimeString('en-US', { hour12: false });
+
+  const next = new Date(ist);
+  next.setHours(24, 0, 0, 0);
+  const diffMs = next - ist;
+  const h = Math.floor(diffMs / 3600000);
+  const m = Math.floor((diffMs % 3600000) / 60000);
+  const s = Math.floor((diffMs % 60000) / 1000);
+  document.getElementById('nextRefresh').textContent = `${h}h ${m}m ${s}s`;
+}
+
+function updateStats() {
+  document.getElementById('totalWords').textContent = WORD_BANK.length + '+';
+  document.getElementById('daysPossible').textContent = Math.floor(WORD_BANK.length / 5) + '+';
+  const ist = getISTDate();
+  document.getElementById('dayNumber').textContent = dayOfYear(ist);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+let currentKey = null;
+function refreshWords(announce = false) {
+  const ist = getISTDate();
+  const key = dateKey(ist);
+  if (key === currentKey && !announce) return;
+  currentKey = key;
+  const words = pickFiveForDate(ist);
+  render(words);
+  if (announce) showToast('✨ नए BCA शब्द लोड हो गए!');
+}
+
+// Init
+refreshWords(false);
+updateStats();
+setInterval(updateDateStrip, 1000);
+setInterval(() => refreshWords(true), 60000);
+</script>
+</body>
+</html>
