@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="description" content="English Vocab - Daily 5 English words with Hindi meanings for BCA students. Free vocabulary learning app with pronunciation.">
+  <meta name="keywords" content="English Vocab, english learning, BCA vocabulary, daily words, hindi meaning, english speaking, learn english, vocab app">
+  <meta name="author" content="English Vocab">
+  <meta property="og:title" content="English Vocab - Daily 5 English Words">
+  <meta property="og:description" content="Roz 5 English words seekho Hindi meaning ke saath. BCA students ke liye perfect!">
+  <meta property="og:type" content="website">
+  <title>English Vocab - रोज 5 English Words सीखो</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+
+  <!-- Google Identity Services (for Sign In With Google button) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="google-config.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- ===================== AUTH SCREEN (Google Only) ===================== -->
+    <div id="authScreen" class="auth-screen">
+      <div class="auth-card">
+
+        <!-- Google Sign-In Only -->
+        <div id="googleOnlyAuth">
+          <div class="auth-logo">📚</div>
+          <h1 class="auth-title">English Vocab</h1>
+          <p class="auth-subtitle">रोज़ 5 English words सीखो — Hindi meaning के साथ 🔥</p>
+
+          <div class="google-welcome">
+            <div class="google-welcome-icon">🔐</div>
+            <p>Sign in with your Google account to continue</p>
+          </div>
+
+          <!-- Google Sign-In (only option) -->
+          <div id="googleSignInContainer">
+            <div id="googleBtn"></div>
+          </div>
+          <div id="googleFallback" style="display:none;">
+            <button class="btn btn-google" onclick="googleSignInFallback()">
+              <span style="font-size:18px; font-weight:800; background:linear-gradient(45deg,#4285f4,#ea4335,#fbbc05,#34a853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">G</span>
+              <span>Sign in with Google</span>
+            </button>
+            <p style="font-size:11px; color:var(--text-light); margin-top:8px; text-align:center;">
+              Google Client ID not configured.<br>
+              <a href="SETUP.md" style="color:var(--primary);">See setup guide</a>
+            </p>
+          </div>
+
+          <div class="auth-features">
+            <div class="feature">✓ Secure Google verification</div>
+            <div class="feature">✓ Your data synced safely</div>
+            <div class="feature">✓ 1-click sign in, no passwords</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== MAIN APP ===================== -->
+    <div id="mainApp" style="display:none;">
+
+      <!-- HEADER -->
+      <header class="app-header">
+        <div class="header-top">
+          <div>
+            <div class="greeting" id="greeting">Good morning</div>
+            <div class="user-name" id="userName">Friend</div>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+          </div>
+        </div>
+        <div class="streak-card">
+          <div class="streak-info">
+            <div class="streak-icon">🔥</div>
+            <div>
+              <div class="streak-text">Current Streak</div>
+              <div class="streak-num"><span id="streakNum">0</span> days</div>
+            </div>
+          </div>
+          <div class="streak-meta">
+            <div><span id="totalLearned">0</span> words learned</div>
+            <div><span id="dayNum">1</span>/300 days</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- TODAY VIEW -->
+      <div class="main-content">
+        <div id="todayView" class="view active">
+          <div class="date-pill">
+            <span class="date-pill-dot"></span>
+            <span id="todayDate">Today</span>
+          </div>
+          <h2 class="section-title">Today's 5 Words</h2>
+          <p class="section-subtitle" id="todaySubtitle">Your daily dose of BCA English</p>
+
+          <!-- Quick action bar -->
+          <div class="quick-actions">
+            <button class="quick-action" onclick="shareToWhatsApp()">
+              <span class="quick-icon">📲</span>
+              <span>Send to WhatsApp</span>
+            </button>
+            <button class="quick-action" onclick="testNotification()">
+              <span class="quick-icon">🔔</span>
+              <span>Test Reminder</span>
+            </button>
+          </div>
+
+          <div id="wordsContainer"></div>
+        </div>
+
+        <!-- HISTORY VIEW -->
+        <div id="historyView" class="view">
+          <h2 class="section-title">Past Days</h2>
+          <p class="section-subtitle">Review words from previous days</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-num" id="statDays">0</div>
+              <div class="stat-label">Days Active</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="statLearned">0</div>
+              <div class="stat-label">Learned</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="statFavs">0</div>
+              <div class="stat-label">Favorites</div>
+            </div>
+          </div>
+          <div id="historyContainer"></div>
+        </div>
+
+        <!-- FAVORITES VIEW -->
+        <div id="favView" class="view">
+          <h2 class="section-title">Favorite Words</h2>
+          <p class="section-subtitle">Words you've saved for quick reference</p>
+          <div id="favContainer"></div>
+        </div>
+
+        <!-- SEARCH VIEW -->
+        <div id="searchView" class="view">
+          <h2 class="section-title">Search</h2>
+          <p class="section-subtitle">Find any word from the dictionary</p>
+          <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Type a word..." oninput="handleSearch()">
+          </div>
+          <div id="searchContainer"></div>
+        </div>
+
+        <!-- PROFILE VIEW -->
+        <div id="profileView" class="view">
+          <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">R</div>
+            <div class="profile-name" id="profileName">Rajneesh</div>
+            <div class="profile-email" id="profileEmail">9876543210</div>
+            <div style="margin-top: 6px;">
+              <span id="googleBadge" class="google-badge" style="display:none;">✓ Google Account</span>
+            </div>
+            <div id="profileGoogleId" style="font-size: 11px; color: var(--text-light); margin-top: 4px; font-family: monospace; word-break: break-all;"></div>
+            <div id="profileWhatsapp" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">📲 +91 9876543210</div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-num" id="pStatLearned">0</div>
+              <div class="stat-label">Learned</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="pStatFavs">0</div>
+              <div class="stat-label">Favorites</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="pStreak">0</div>
+              <div class="stat-label">Streak 🔥</div>
+            </div>
+          </div>
+
+          <!-- Notification Settings -->
+          <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 20px; margin: 20px 0 10px;">⚙️ Settings</h3>
+          <div style="padding: 0 20px;">
+            <div class="settings-card">
+              <div class="settings-row">
+                <div>
+                  <div style="font-weight: 600; font-size: 14px;">🔔 Daily Reminder</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Browser notification at <span id="reminderTimeText">9:00 AM</span></div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="notifToggle" onchange="toggleNotification()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="settings-row" id="timeRow" style="display:none;">
+                <div>
+                  <div style="font-weight: 600; font-size: 14px;">⏰ Reminder Time</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">When should we remind you?</div>
+                </div>
+                <input type="time" id="reminderTime" value="09:00" onchange="updateReminderTime()" style="border: 1px solid var(--border); padding: 6px 10px; border-radius: 8px; font-family: inherit;">
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="profile-btn" onclick="shareToWhatsApp()">
+              <span class="profile-btn-icon">📲</span>
+              <span>Share Today's Words on WhatsApp</span>
+            </button>
+            <button class="profile-btn" onclick="exportData()">
+              <span class="profile-btn-icon">💾</span>
+              <span>Export My Data</span>
+            </button>
+            <button class="profile-btn" onclick="showUpgradeInfo()">
+              <span class="profile-btn-icon">🚀</span>
+              <span>Upgrade to Real WhatsApp Auto-Send</span>
+            </button>
+            <button class="profile-btn" onclick="resetProgress()">
+              <span class="profile-btn-icon">🔄</span>
+              <span>Reset Progress</span>
+            </button>
+            <button class="profile-btn danger" onclick="handleLogout()">
+              <span class="profile-btn-icon">🚪</span>
+              <span>Logout</span>
+            </button>
+            <p style="text-align: center; color: var(--text-light); font-size: 11px; margin-top: 20px; padding: 0 20px;">
+              English Vocab v2.0<br>
+              रोज़ थोड़ा सीखो, बहुत आगे बढ़ो 💜
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-view="todayView" onclick="switchView('todayView')">
+          <span class="nav-icon">📚</span>
+          <span>Today</span>
+        </button>
+        <button class="nav-item" data-view="historyView" onclick="switchView('historyView')">
+          <span class="nav-icon">📅</span>
+          <span>History</span>
+        </button>
+        <button class="nav-item" data-view="favView" onclick="switchView('favView')">
+          <span class="nav-icon">⭐</span>
+          <span>Saved</span>
+        </button>
+        <button class="nav-item" data-view="searchView" onclick="switchView('searchView')">
+          <span class="nav-icon">🔍</span>
+          <span>Search</span>
+        </button>
+        <button class="nav-item" data-view="profileView" onclick="switchView('profileView')">
+          <span class="nav-icon">👤</span>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Upgrade modal -->
+    <div id="upgradeModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeUpgradeInfo()">×</button>
+        <h2 style="margin-bottom: 12px;">🚀 Real WhatsApp Auto-Send</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+          Demo version uses WhatsApp Share button. For <strong>automatic daily delivery</strong>, you need a real backend with Twilio:
+        </p>
+        <ol style="font-size: 13px; line-height: 1.8; padding-left: 20px; color: var(--text);">
+          <li>Sign up at <strong>twilio.com</strong> (free trial)</li>
+          <li>Activate WhatsApp Business sandbox</li>
+          <li>Get API keys</li>
+          <li>Deploy this code as backend with cron job</li>
+          <li>Costs: ~₹0.50/message + free tier available</li>
+        </ol>
+        <p style="background: var(--gradient-soft); padding: 12px; border-radius: 8px; font-size: 12px; margin-top: 16px;">
+          💡 <strong>Free alternative:</strong> Use browser notifications (already in this app!) for daily reminders. Add to Home Screen for best experience.
+        </p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">
+          Full integration code is included in <code>backend-integration.js</code> of the source zip.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word data (1504 unique BCA words) -->
+  <script src="words-data.js"></script>
+  <script src="app.js"></script>
+  <script src="email-subscribe.js"></script>
+</body>
+</html>
