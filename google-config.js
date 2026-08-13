@@ -20,7 +20,7 @@ window.GOOGLE_CONFIG = {
   // 👇 YOUR BACKEND API URL (leave empty for local mode)
   // For local testing: 'http://localhost:3000'
   // For production: 'https://your-backend.onrender.com'
-  API_BASE: 'https://english-vocab-sooty.vercel.app',
+  API_BASE: 'https://english-vocab-sooty.vercel.app/',
 
   // Google button settings
   AUTO_SELECT: false,
